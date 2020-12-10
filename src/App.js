@@ -4,8 +4,10 @@ import Post from './components/Post';
 function App() {
   return (
     <div className="App" data-testid="App">
-      <div>top bar</div>
-      <Post />
+      <div className="topBar">top bar y</div>
+      <div className="feed">
+        <Post />
+      </div>
     </div>
   );
 }

@@ -1,0 +1,34 @@
+.body {
+  height: 100%;
+  width: 100%;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+.App {
+  background-color: black;
+  border: solid black 1px;
+}
+
+.topBar {
+  height: 10vh;
+  background-color: grey;
+  border: solid 1px black;
+}
+
+.feed {
+  width: 95%;
+  overflow: auto;
+  margin: auto;
+  padding: 3px;
+  background-color: yellow;
+  display: flex;
+  flex-direction: column;
+}
+
+.post {
+  margin: 3px;
+  padding: 3px;
+  background-color: red;
+}
