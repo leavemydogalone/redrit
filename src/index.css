@@ -18,10 +18,10 @@
 }
 
 .feed {
-  width: 95%;
+  width: 97%;
   overflow: auto;
   margin: auto;
-  padding: 3px;
+  padding: 5px;
   background-color: yellow;
   display: flex;
   flex-direction: column;
@@ -31,4 +31,9 @@
   margin: 3px;
   padding: 3px;
   background-color: red;
+}
+
+.topBanner,
+.bottomBanner {
+  border: solid black 1px;
 }
