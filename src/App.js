@@ -10,13 +10,13 @@ function App() {
 
   function getPosts() {
     setLoading(true);
-    ref.onSnapshot((querySnapshot) => {
+    ref.get().then((querySnapshot) => {
       const items = [];
       querySnapshot.forEach((doc) => {
         items.push(doc.data());
-        setPosts(items);
-        setLoading(false);
       });
+      setPosts(items);
+      setLoading(false);
     });
   }
 
@@ -24,11 +24,17 @@ function App() {
     getPosts();
   }, []);
 
+  if (loading) {
+    return <h1>One second, must load posts</h1>;
+  }
+
   return (
     <div className="App" data-testid="App">
-      <div className="topBar">top bar y</div>
+      <div className="topBar">top bar</div>
       <div className="feed">
-        <Post />
+        {posts.map((post) => (
+          <Post post={post} key={post.title} />
+        ))}
       </div>
     </div>
   );

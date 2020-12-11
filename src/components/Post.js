@@ -2,13 +2,14 @@ import React from 'react';
 import TopBanner from './TopBanner';
 import PostBody from './PostBody';
 import BottomBanner from './BottomBanner';
-// import '../index.css';
 
-export default function Post() {
+export default function Post({ post }) {
   return (
     <div data-testid="Post" className="post">
       <TopBanner />
-      <PostBody />
+      {/* <PostBody /> */}
+      {post.title}
+      {post.content}
       <BottomBanner />
     </div>
   );
