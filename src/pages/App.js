@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import Post from './components/Post';
-import firebase from './firebase';
+import Post from '../components/Post';
+import firebase from '../firebase';
 
 function App() {
   const [posts, setPosts] = useState([]);
@@ -25,7 +25,7 @@ function App() {
   }, []);
 
   if (loading) {
-    return <h1>One second, must load posts</h1>;
+    return <h1 data-testid="App">One second, must load posts</h1>;
   }
 
   return (
