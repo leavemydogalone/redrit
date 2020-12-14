@@ -31,6 +31,31 @@ describe('all the info displayed correcly', () => {
 describe('should recognize if it is text or image', () => {
   it('should load an image', () => {
     const { queryByTestId } = render(<Post post={imgPost} />);
-    expect(queryByTestId('Post')).toMatchInlineSnapshot();
+    expect(queryByTestId('Post')).toMatchInlineSnapshot(`
+      <div
+        class="post"
+        data-testid="Post"
+      >
+        <div
+          class="topBanner"
+          data-testid="TopBanner"
+        >
+          im the top banner of a post
+        </div>
+        <b>
+          im an image post
+        </b>
+        <br />
+        <div>
+          https://i.imgur.com/JlUvsxa.jpg
+        </div>
+        <div
+          class="bottomBanner"
+          data-testid="BottomBanner"
+        >
+          im the bottom banner of the post
+        </div>
+      </div>
+    `);
   });
 });
