@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from '@testing-library/react';
-import App from '../App';
+import App from '../pages/App';
 
 describe('should work', () => {
   it('should render', () => {

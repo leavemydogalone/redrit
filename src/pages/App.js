@@ -3,6 +3,7 @@ import Post from '../components/Post';
 import firebase from '../firebase';
 
 function App() {
+  // const [Homefeed, setHomeFeed] = useState(false);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -30,7 +31,6 @@ function App() {
 
   return (
     <div className="App" data-testid="App">
-      <div className="topBar">top bar</div>
       <div className="feed">
         {posts.map((post) => (
           <Post post={post} key={post.title} />
