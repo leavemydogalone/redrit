@@ -12,13 +12,15 @@ export default function Post({ post }) {
     );
   return (
     <div data-testid="Post" className="post">
-      <TopBanner />
+      <div className="topBanner" data-testid="TopBanner">
+        <b>{post.group}</b>
+        {post.user}
+      </div>
       <b>{post.title}</b>
       <br />
       <div className="postBody" data-testid="PostBody">
         {postBody}
       </div>
-
       <BottomBanner />
     </div>
   );

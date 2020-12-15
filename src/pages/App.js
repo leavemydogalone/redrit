@@ -3,11 +3,11 @@ import Post from '../components/Post';
 import firebase from '../firebase';
 
 function App() {
-  // const [Homefeed, setHomeFeed] = useState(false);
+  const [feed, setFeed] = useState('all');
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const ref = firebase.firestore().collection('posts');
+  const ref = firebase.firestore().collection('dogs');
 
   function getPosts() {
     setLoading(true);
@@ -33,7 +33,7 @@ function App() {
     <div className="App" data-testid="App">
       <div className="feed">
         {posts.map((post) => (
-          <Post post={post} key={post.title} />
+          <Post post={post} key={post.title} setFeed={setFeed} />
         ))}
       </div>
     </div>
