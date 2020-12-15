@@ -21,40 +21,29 @@ it('should render', () => {
   expect(queryByTestId('Post')).toBeTruthy();
 });
 
-describe('all the info displayed correcly', () => {
-  it('should ', () => {
+describe('recognizes a text document', () => {
+  it('should display tect in body', () => {
     const { queryByTestId } = render(<Post post={textPost} />);
-    expect(queryByTestId('Post')).toBeTruthy();
+    expect(queryByTestId('PostBody')).toMatchInlineSnapshot(`
+      <div
+        class="postBody"
+        data-testid="PostBody"
+      >
+        im the content
+      </div>
+    `);
   });
 });
 
-describe('should recognize if it is text or image', () => {
+describe('should recognize if it is image', () => {
   it('should load an image', () => {
     const { queryByTestId } = render(<Post post={imgPost} />);
-    expect(queryByTestId('Post')).toMatchInlineSnapshot(`
+    expect(queryByTestId('PostBody')).toMatchInlineSnapshot(`
       <div
-        class="post"
-        data-testid="Post"
+        class="postBody"
+        data-testid="PostBody"
       >
-        <div
-          class="topBanner"
-          data-testid="TopBanner"
-        >
-          im the top banner of a post
-        </div>
-        <b>
-          im an image post
-        </b>
-        <br />
-        <div>
-          https://i.imgur.com/JlUvsxa.jpg
-        </div>
-        <div
-          class="bottomBanner"
-          data-testid="BottomBanner"
-        >
-          im the bottom banner of the post
-        </div>
+        https://i.imgur.com/JlUvsxa.jpg
       </div>
     `);
   });

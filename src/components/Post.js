@@ -6,7 +6,7 @@ import BottomBanner from './BottomBanner';
 export default function Post({ post }) {
   const postBody =
     post.contentType === 'text' ? (
-      <div>{post.content}</div>
+      post.content
     ) : (
       <img alt="post.title" src={post.content} />
     );
@@ -15,7 +15,10 @@ export default function Post({ post }) {
       <TopBanner />
       <b>{post.title}</b>
       <br />
-      {postBody}
+      <div className="postBody" data-testid="PostBody">
+        {postBody}
+      </div>
+
       <BottomBanner />
     </div>
   );
