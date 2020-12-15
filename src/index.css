@@ -41,14 +41,26 @@ li {
   background-color: red;
 }
 
-.topBanner,
-.bottomBanner {
-  border: solid black 1px;
+.topBanner {
+  margin-bottom: 5px;
 }
-
+.bottomBanner {
+  margin-top: 5px;
+}
+.topBanner b,
+.username,
+.postComments {
+  cursor: pointer;
+}
 .topBanner b {
   margin-right: 10px;
 }
+
+.username,
+.postComments {
+  width: fit-content;
+}
+
 img {
   max-height: 30%;
   max-width: 30%;

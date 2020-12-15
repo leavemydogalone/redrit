@@ -10,18 +10,23 @@ export default function Post({ post }) {
     ) : (
       <img alt="post.title" src={post.content} />
     );
+
+  console.log(post);
   return (
     <div data-testid="Post" className="post">
       <div className="topBanner" data-testid="TopBanner">
         <b>{post.group}</b>
-        {post.user}
+        <div className="username">
+          u/
+          {post.user}
+        </div>
       </div>
       <b>{post.title}</b>
       <br />
       <div className="postBody" data-testid="PostBody">
         {postBody}
       </div>
-      <BottomBanner />
+      <BottomBanner post={post} />
     </div>
   );
 }
