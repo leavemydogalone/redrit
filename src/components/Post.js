@@ -11,7 +11,6 @@ export default function Post({ post }) {
       <img alt="post.title" src={post.content} />
     );
 
-  console.log(post);
   return (
     <div data-testid="Post" className="post">
       <div className="topBanner" data-testid="TopBanner">

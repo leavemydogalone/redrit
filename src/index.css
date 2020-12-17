@@ -25,6 +25,7 @@ li {
   margin-right: 20px;
   display: block;
 }
+
 .feed {
   width: 60%;
   overflow: auto;
@@ -64,4 +65,22 @@ li {
 img {
   max-height: 30%;
   max-width: 30%;
+}
+
+.postForm {
+  background-color: rgba(0, 0, 255, 0.247);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.postForm textarea {
+  min-height: 20vh;
+  min-width: 20vw;
+}
+
+.postForm button {
+  width: fit-content;
+  min-width: 10vw;
+  margin: auto;
 }

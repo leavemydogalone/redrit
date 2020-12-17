@@ -7,7 +7,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const ref = firebase.firestore().collection('dogs');
+  const ref = firebase.firestore().collection('posts');
 
   function getPosts() {
     setLoading(true);
