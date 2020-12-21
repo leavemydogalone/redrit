@@ -1,9 +1,8 @@
 import React from 'react';
-import TopBanner from './TopBanner';
-// import PostBody from './PostBody';
-import BottomBanner from './BottomBanner';
+// import TopBanner from './TopBanner';
+import { Link } from 'react-router-dom';
 
-export default function Post({ post }) {
+export default function Post({ post, commentsLink, setCommentSection }) {
   const postBody =
     post.contentType === 'text' ? (
       post.content
@@ -25,7 +24,19 @@ export default function Post({ post }) {
       <div className="postBody" data-testid="PostBody">
         {postBody}
       </div>
-      <BottomBanner post={post} />
+      <div className="bottomBanner">
+        {/* <div
+          role="button"
+          tabIndex="0"
+          onKeyDown={setCommentSection(post.id)}
+          onClick={() => setCommentSection(post.id)}
+        > */}
+        {/* {commentsLink} */}
+        <Link to="/comments" onClick={() => setCommentSection(post.id)}>
+          Comments
+        </Link>
+        {/* </div> */}
+      </div>
     </div>
   );
 }

@@ -81,7 +81,14 @@ export default function PostForm() {
       <button
         type="button"
         onClick={() => {
-          addPost({ title, group, content, id: uuidv4(), contentType });
+          addPost({
+            title,
+            group,
+            content,
+            id: uuidv4(),
+            contentType,
+            timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+          });
           setTitle('');
           setGroup('');
           setContent('');

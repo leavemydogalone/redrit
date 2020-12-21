@@ -6,6 +6,9 @@ import Comments from './pages/Comments';
 import PostForm from './pages/PostForm';
 
 export default function Routes() {
+  const [commentSection, setCommentSection] = useState('');
+  const commentsLink = <Link to="/comments">Comments</Link>;
+
   return (
     <BrowserRouter>
       <div className="topBar">
@@ -24,12 +27,15 @@ export default function Routes() {
       <Switch>
         <Route exact path="/postform" component={PostForm} />
         <Route exact path="/">
-          <App />
+          <App
+            commentsLink={commentsLink}
+            setCommentSection={setCommentSection}
+          />
+        </Route>
+        <Route exact path="/comments">
+          <Comments commentSection={commentSection} />
         </Route>
         <Route exact path="/profile" component={Profile} />
-        <Route exact path="/profile">
-          <Comments />
-        </Route>
       </Switch>
     </BrowserRouter>
   );

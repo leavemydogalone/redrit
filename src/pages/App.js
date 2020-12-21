@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Post from '../components/Post';
 import firebase from '../firebase';
 
-function App() {
+function App({ commentsLink, setCommentSection }) {
   const [feed, setFeed] = useState('all');
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -33,7 +33,13 @@ function App() {
     <div className="App" data-testid="App">
       <div className="feed">
         {posts.map((post) => (
-          <Post post={post} key={post.title} setFeed={setFeed} />
+          <Post
+            post={post}
+            key={post.title}
+            setFeed={setFeed}
+            commentsLink={commentsLink}
+            setCommentSection={setCommentSection}
+          />
         ))}
       </div>
     </div>
