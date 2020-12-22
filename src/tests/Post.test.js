@@ -1,12 +1,13 @@
 import React from 'react';
-import { render } from '@testing-library/react';
+import { render, fireEvent } from '@testing-library/react';
 // import { it, describe, expect, test } from '@jest/globals';
 import Post from '../components/Post';
 
 const setCommentSection = jest.fn();
-const linkFunction = jest.fn();
 
-const linkToComments = <div onClick={() => linkFunction()}></div>;
+const commentsLink = (postId) => (
+  <div onClick={() => setCommentSection(postId)}>Comments</div>
+);
 
 const textPost = {
   title: 'im a text post',
@@ -30,7 +31,7 @@ it('should render', () => {
     <Post
       post={textPost}
       setCommentSection={setCommentSection}
-      commentsLink={linkToComments}
+      commentsLink={commentsLink}
     />
   );
   expect(queryByTestId('Post')).toBeTruthy();
@@ -42,7 +43,7 @@ describe('recognizes a text document', () => {
       <Post
         post={textPost}
         setCommentSection={setCommentSection}
-        commentsLink={linkToComments}
+        commentsLink={commentsLink}
       />
     );
     expect(queryByTestId('PostBody')).toMatchInlineSnapshot(`
@@ -62,7 +63,7 @@ describe('should recognize if it is image', () => {
       <Post
         post={imgPost}
         setCommentSection={setCommentSection}
-        commentsLink={linkToComments}
+        commentsLink={commentsLink}
       />
     );
     expect(queryByTestId('PostBody')).toMatchInlineSnapshot(`
@@ -76,5 +77,19 @@ describe('should recognize if it is image', () => {
         />
       </div>
     `);
+  });
+});
+
+describe('Comment link', () => {
+  it('should fire the jest function on click', () => {
+    const { queryByText } = render(
+      <Post
+        post={imgPost}
+        setCommentSection={setCommentSection}
+        commentsLink={commentsLink}
+      />
+    );
+    fireEvent.click(queryByText('Comments'));
+    expect(setCommentSection).toHaveBeenCalledTimes(1);
   });
 });

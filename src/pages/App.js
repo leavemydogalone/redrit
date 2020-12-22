@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Post from '../components/Post';
 import firebase from '../firebase';
 
-function App({ commentsLink, setCommentSection }) {
+function App({ commentsLink }) {
   const [feed, setFeed] = useState('all');
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -38,7 +38,6 @@ function App({ commentsLink, setCommentSection }) {
             key={post.title}
             setFeed={setFeed}
             commentsLink={commentsLink}
-            setCommentSection={setCommentSection}
           />
         ))}
       </div>

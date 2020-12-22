@@ -1,8 +1,7 @@
 import React from 'react';
 // import TopBanner from './TopBanner';
-import { Link } from 'react-router-dom';
 
-export default function Post({ post, commentsLink, setCommentSection }) {
+export default function Post({ post, commentsLink }) {
   const postBody =
     post.contentType === 'text' ? (
       post.content
@@ -24,19 +23,7 @@ export default function Post({ post, commentsLink, setCommentSection }) {
       <div className="postBody" data-testid="PostBody">
         {postBody}
       </div>
-      <div className="bottomBanner">
-        {/* <div
-          role="button"
-          tabIndex="0"
-          onKeyDown={setCommentSection(post.id)}
-          onClick={() => setCommentSection(post.id)}
-        > */}
-        {/* {commentsLink} */}
-        <Link to="/comments" onClick={() => setCommentSection(post.id)}>
-          Comments
-        </Link>
-        {/* </div> */}
-      </div>
+      <div className="bottomBanner">{commentsLink(post.id)}</div>
     </div>
   );
 }

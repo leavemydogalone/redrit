@@ -6,8 +6,15 @@ import Comments from './pages/Comments';
 import PostForm from './pages/PostForm';
 
 export default function Routes() {
-  const [commentSection, setCommentSection] = useState('');
-  const commentsLink = <Link to="/comments">Comments</Link>;
+  const [commentSection, setCommentSection] = useState(
+    '9359d93d-a0be-4320-a4b0-5b7256d0babb'
+  );
+
+  const commentsLink = (postId) => (
+    <Link to="/comments" onClick={() => setCommentSection(postId)}>
+      Comments
+    </Link>
+  );
 
   return (
     <BrowserRouter>
@@ -25,15 +32,15 @@ export default function Routes() {
         </ul>
       </div>
       <Switch>
+        <Route exact path="/comments">
+          <Comments commentSection={commentSection} />
+        </Route>
         <Route exact path="/postform" component={PostForm} />
         <Route exact path="/">
           <App
-            commentsLink={commentsLink}
             setCommentSection={setCommentSection}
+            commentsLink={commentsLink}
           />
-        </Route>
-        <Route exact path="/comments">
-          <Comments commentSection={commentSection} />
         </Route>
         <Route exact path="/profile" component={Profile} />
       </Switch>
