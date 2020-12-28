@@ -4,7 +4,7 @@ import firebase from '../firebase';
 import Comment from '../components/Comment';
 
 export default function Comments({ commentSection }) {
-  // const commentID = '9359d93d-a0be-4320-a4b0-5b7256d0babb';
+  const commentID = '9359d93d-a0be-4320-a4b0-5b7256d0babb';
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState(true);
   const [standInText, setStandInText] = useState('loading...');
