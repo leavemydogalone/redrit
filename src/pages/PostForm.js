@@ -87,6 +87,7 @@ export default function PostForm() {
             content,
             id: uuidv4(),
             contentType,
+            comments: [],
             timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
           });
           setTitle('');

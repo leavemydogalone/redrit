@@ -7,9 +7,20 @@ export default function Comment({ thisComment }) {
 
   return (
     <div className="comment">
-      <div className="commentHeader">Im the comment header</div>
+      <div className="commentHeader">
+        u/
+        {thisComment.user}
+      </div>
       <div className="commentBody">{thisComment.content}</div>
-      <div className="commentFooter">Votes, report, edit</div>
+      <div className="commentFooter">
+        <div>
+          {thisComment.votes}
+          {'      '}
+          upvotes
+        </div>
+        <div>reply</div>
+        <div>report</div>
+      </div>
       {nestedComments}
     </div>
   );
