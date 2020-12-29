@@ -66,16 +66,14 @@ export default function Comments({ commentSection }) {
         />
         <button
           type="button"
-          onClick={
-            () =>
-              handleSubmit({
-                content: newCommentText,
-                id: uuidv4(),
-                user: 'im a user',
-                votes: 1,
-                timeStamp: firebase.firestore.Timestamp.now(),
-              })
-            // eslint-disable-next-line react/jsx-curly-newline
+          onClick={() =>
+            handleSubmit({
+              content: newCommentText,
+              id: uuidv4(),
+              user: 'im a user',
+              votes: 1,
+              timeStamp: firebase.firestore.Timestamp.now(),
+            })
           }
         >
           Submit

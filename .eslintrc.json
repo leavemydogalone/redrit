@@ -20,6 +20,7 @@
   "rules": {
     "react/prop-types": "off",
     "react/jsx-filename-extension": [0],
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-console": "off"
   }
 }
