@@ -6,6 +6,7 @@ export default function Comment({ thisComment, set }) {
   const [childCommentText, setChildCommentText] = useState(
     'Reply to comment...'
   );
+
   const [formPopUp, setFormPopUp] = useState();
 
   function handleSubmit() {
@@ -13,7 +14,7 @@ export default function Comment({ thisComment, set }) {
   }
 
   const childCommentForm = (
-    <div>
+    <div className="commentPopUp">
       <textarea
         value={childCommentText}
         onFocus={(e) => {
@@ -35,7 +36,7 @@ export default function Comment({ thisComment, set }) {
           })
         }
       >
-        Submit!
+        Submit response!
       </button>
     </div>
   );
@@ -45,17 +46,14 @@ export default function Comment({ thisComment, set }) {
   ));
 
   return (
-    <div className="comment">
+    <div className="comment" data-testid="Comment">
       <div className="commentHeader">
         u/
         {thisComment.user}
       </div>
       <div className="commentBody">{thisComment.content}</div>
       <div className="commentFooter">
-        <div>
-          {thisComment.votes}
-          upvotes
-        </div>
+        <div>{thisComment.votes} upvotes</div>
         <div
           role="button"
           tabIndex="0"
@@ -65,8 +63,9 @@ export default function Comment({ thisComment, set }) {
           reply
         </div>
         <div>report</div>
-        <div>{formPopUp}</div>
+        <br />
       </div>
+      {formPopUp}
       {nestedComments}
     </div>
   );

@@ -4,13 +4,13 @@ import firebase from '../firebase';
 import Comment from '../components/Comment';
 
 export default function Comments({ commentSection }) {
-  const commentID = '9359d93d-a0be-4320-a4b0-5b7256d0babb';
+  const commentID = '264ddc16-e9fa-476c-b3f9-44a55a8e1443';
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState(true);
   const [standInText, setStandInText] = useState('loading...');
   const [newCommentText, setNewCommentText] = useState('Enter new comment!');
 
-  const docRef = firebase.firestore().collection('posts').doc(commentSection);
+  const docRef = firebase.firestore().collection('posts').doc(commentID);
   const commentsRef = firebase.firestore().collection('comments');
 
   function getPostData() {
@@ -50,6 +50,8 @@ export default function Comments({ commentSection }) {
     return <h1>{standInText}</h1>;
   }
 
+  // probably also want the post info on this page at the top. can just have user
+  // , content, votes, and a report button
   return (
     <div className="commentPage">
       <div className="commentForm">
