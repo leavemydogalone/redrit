@@ -27,11 +27,12 @@ const sampleCommentObj = {
 
 describe('it should render all parts', () => {
   it('render', () => {
-    const { queryByTestId } = render(
+    const { queryAllByTestId } = render(
       <Comment thisComment={sampleCommentObj} />
     );
-    expect(queryByTestId('Comment')).toBeTruthy();
+    expect(queryAllByTestId('Comment')).toBeTruthy();
   });
+
   it('should render text', () => {
     const { queryByText } = render(<Comment thisComment={sampleCommentObj} />);
     expect(queryByText('im the content')).toBeTruthy();
@@ -40,12 +41,125 @@ describe('it should render all parts', () => {
   });
 });
 
-describe('nested children', () => {});
 describe('reply button', () => {
   it('should produce form on click', () => {
-    const { queryByText } = render(<Comment thisComment={sampleCommentObj} />);
-    fireEvent.click(queryByText('reply'));
-    expect(queryByText('Reply to comment...')).toBeTruthy();
-    expect(queryByText('Submit response!')).toBeTruthy();
+    const { getAllByText, getByText } = render(
+      <Comment thisComment={sampleCommentObj} />
+    );
+    fireEvent.click(getAllByText('reply')[0]);
+    expect(getByText('Reply to comment...')).toBeTruthy();
+    expect(getByText('Submit response!')).toBeTruthy();
+  });
+});
+
+describe('nested children', () => {
+  it('should render children properly', () => {
+    const { queryAllByTestId } = render(
+      <Comment thisComment={sampleCommentObj} />
+    );
+    expect(queryAllByTestId('Comment')[0]).toMatchInlineSnapshot(`
+        <div
+          class="comment"
+          data-testid="Comment"
+        >
+          <div
+            class="commentHeader"
+          >
+            u/
+            mrman
+          </div>
+          <div
+            class="commentBody"
+          >
+            im the content
+          </div>
+          <div
+            class="commentFooter"
+          >
+            <div>
+              2
+               upvotes
+            </div>
+            <div
+              role="button"
+              tabindex="0"
+            >
+              reply
+            </div>
+            <div>
+              report
+            </div>
+            <br />
+          </div>
+          <div
+            class="comment"
+            data-testid="Comment"
+          >
+            <div
+              class="commentHeader"
+            >
+              u/
+              myguy
+            </div>
+            <div
+              class="commentBody"
+            >
+              stuff
+            </div>
+            <div
+              class="commentFooter"
+            >
+              <div>
+                3
+                 upvotes
+              </div>
+              <div
+                role="button"
+                tabindex="0"
+              >
+                reply
+              </div>
+              <div>
+                report
+              </div>
+              <br />
+            </div>
+            <div
+              class="comment"
+              data-testid="Comment"
+            >
+              <div
+                class="commentHeader"
+              >
+                u/
+                im a child
+              </div>
+              <div
+                class="commentBody"
+              >
+                stuff
+              </div>
+              <div
+                class="commentFooter"
+              >
+                <div>
+                  1
+                   upvotes
+                </div>
+                <div
+                  role="button"
+                  tabindex="0"
+                >
+                  reply
+                </div>
+                <div>
+                  report
+                </div>
+                <br />
+              </div>
+            </div>
+          </div>
+        </div>
+      `);
   });
 });
