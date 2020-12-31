@@ -9,6 +9,7 @@ export default function Comments({ commentSection }) {
   const [loading, setLoading] = useState(true);
   const [standInText, setStandInText] = useState('loading...');
   const [newCommentText, setNewCommentText] = useState('Enter new comment!');
+  const [selected, setSelected] = useState(false);
 
   const docRef = firebase.firestore().collection('posts').doc(commentID);
   const commentsRef = firebase.firestore().collection('comments');
@@ -83,7 +84,12 @@ export default function Comments({ commentSection }) {
       </div>
       <div className="commentSection">
         {postData.comments.map((comment) => (
-          <Comment thisComment={comment} key={comment.id} />
+          <Comment
+            thisComment={comment}
+            key={comment.id}
+            selected={selected}
+            setSelected={setSelected}
+          />
         ))}
       </div>
     </div>

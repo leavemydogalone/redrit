@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import firebase from '../firebase';
 
-export default function Comment({ thisComment, set }) {
+export default function Comment({ thisComment, setSelected, selected }) {
   const [childCommentText, setChildCommentText] = useState(
     'Reply to comment...'
   );
-
-  const [formPopUp, setFormPopUp] = useState();
+  const [formPopUp, setFormPopUp] = useState([]);
 
   function handleSubmit() {
     return true;
@@ -32,6 +31,7 @@ export default function Comment({ thisComment, set }) {
             id: uuidv4(),
             user: 'im a user',
             votes: 1,
+            children: [],
             timeStamp: firebase.firestore.Timestamp.now(),
           })
         }
@@ -41,8 +41,24 @@ export default function Comment({ thisComment, set }) {
     </div>
   );
 
+  async function handleFormPopUp() {
+    await setSelected(false);
+    if (formPopUp.length === 1) return;
+    setSelected(true);
+    setFormPopUp([childCommentForm]);
+  }
+
+  useEffect(() => {
+    if (!selected) setFormPopUp([]);
+  }, [selected]);
+
   const nestedComments = (thisComment.children || []).map((comment) => (
-    <Comment key={comment.id} thisComment={comment} />
+    <Comment
+      key={comment.id}
+      thisComment={comment}
+      selected={selected}
+      setSelected={setSelected}
+    />
   ));
 
   return (
@@ -57,15 +73,15 @@ export default function Comment({ thisComment, set }) {
         <div
           role="button"
           tabIndex="0"
-          onKeyDown={() => setFormPopUp(childCommentForm)}
-          onClick={() => setFormPopUp(childCommentForm)}
+          onKeyDown={() => handleFormPopUp()}
+          onClick={() => handleFormPopUp()}
         >
           reply
         </div>
         <div>report</div>
         <br />
       </div>
-      {formPopUp}
+      {formPopUp.map((child) => child)}
       {nestedComments}
     </div>
   );

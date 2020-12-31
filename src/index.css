@@ -131,6 +131,10 @@ img {
   display: block;
 }
 
+.commentFooter [role='button']:hover {
+  cursor: pointer;
+}
+
 .comment textarea {
   margin-left: 1vw;
 }
