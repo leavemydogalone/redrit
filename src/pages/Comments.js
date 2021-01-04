@@ -55,42 +55,52 @@ export default function Comments({ commentSection }) {
   // , content, votes, and a report button
   return (
     <div className="commentPage">
-      <div className="commentForm">
-        <textarea
-          value={newCommentText}
-          onFocus={(e) => {
-            if (e.target.value === 'Enter new comment!') {
-              setNewCommentText('');
-            }
-          }}
-          onChange={(e) => setNewCommentText(e.target.value)}
-        />
-        <button
-          type="button"
-          onClick={() =>
-            handleSubmit({
-              content: newCommentText,
-              id: uuidv4(),
-              user: 'im a user',
-              votes: 1,
-              timeStamp: firebase.firestore.Timestamp.now(),
-            })
-          }
-        >
-          Submit
+      <div className="commentPageContainer">
+        <div className="commentPostContent">
+          <div>u/{postData.user}</div>
           <br />
-          Comment
-        </button>
-      </div>
-      <div className="commentSection">
-        {postData.comments.map((comment) => (
-          <Comment
-            thisComment={comment}
-            key={comment.id}
-            selected={selected}
-            setSelected={setSelected}
+          <div>{postData.content}</div>
+          <br />
+          <div>votes {postData.votes}</div>
+        </div>
+
+        <div className="commentForm">
+          <textarea
+            value={newCommentText}
+            onFocus={(e) => {
+              if (e.target.value === 'Enter new comment!') {
+                setNewCommentText('');
+              }
+            }}
+            onChange={(e) => setNewCommentText(e.target.value)}
           />
-        ))}
+          <button
+            type="button"
+            onClick={() =>
+              handleSubmit({
+                content: newCommentText,
+                id: uuidv4(),
+                user: 'im a user',
+                votes: 1,
+                timeStamp: firebase.firestore.Timestamp.now(),
+              })
+            }
+          >
+            Submit
+            <br />
+            Comment
+          </button>
+        </div>
+        <div className="commentsList">
+          {postData.comments.map((comment) => (
+            <Comment
+              thisComment={comment}
+              key={comment.id}
+              selected={selected}
+              setSelected={setSelected}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

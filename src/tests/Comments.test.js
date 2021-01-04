@@ -1,5 +1,6 @@
 import React from 'react';
 import addChildComment from '../methods/commentMethods';
+import Comments from '../pages/Comments';
 
 const commentsArray = [
   {
@@ -42,8 +43,8 @@ test('function should return correct array', () => {
       user: 'guy',
       votes: 2,
       children: [],
-    })
-  ).toContain({
+    })[1].children[0].children[0]
+  ).toMatchObject({
     children: [],
     content: 'stuff',
     id: '2342',
