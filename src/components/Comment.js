@@ -1,51 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
 import firebase from '../firebase';
+import ChildCommentForm from './ChildCommentForm';
 
-export default function Comment({ thisComment, setSelected, selected }) {
-  const [childCommentText, setChildCommentText] = useState(
-    'Reply to comment...'
-  );
+export default function Comment({
+  thisComment,
+  setSelected,
+  selected,
+  postData,
+}) {
   const [formPopUp, setFormPopUp] = useState([]);
-
-  function handleSubmit() {
-    return true;
-  }
-
-  const childCommentForm = (
-    <div className="commentPopUp">
-      <textarea
-        value={childCommentText}
-        onFocus={(e) => {
-          if (e.target.value === 'Reply to comment...') {
-            setChildCommentText('');
-          }
-        }}
-        onChange={(e) => setChildCommentText(e.target.value)}
-      />
-      <button
-        type="button"
-        onClick={() =>
-          handleSubmit({
-            content: childCommentText,
-            id: uuidv4(),
-            user: 'im a user',
-            votes: 1,
-            children: [],
-            timeStamp: firebase.firestore.Timestamp.now(),
-          })
-        }
-      >
-        Submit response!
-      </button>
-    </div>
-  );
 
   async function handleFormPopUp() {
     await setSelected(false);
     if (formPopUp.length === 1) return;
     setSelected(true);
-    setFormPopUp([childCommentForm]);
+    setFormPopUp([
+      <ChildCommentForm thisComment={thisComment} postData={postData} />,
+    ]);
   }
 
   useEffect(() => {
@@ -58,6 +29,7 @@ export default function Comment({ thisComment, setSelected, selected }) {
       thisComment={comment}
       selected={selected}
       setSelected={setSelected}
+      postData={postData}
     />
   ));
 

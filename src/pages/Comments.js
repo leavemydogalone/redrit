@@ -8,7 +8,7 @@ export default function Comments({ commentSection }) {
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState(true);
   const [standInText, setStandInText] = useState('loading...');
-  const [newCommentText, setNewCommentText] = useState('Enter new comment!');
+  const [newCommentText, setNewCommentText] = useState('');
   const [selected, setSelected] = useState(false);
 
   const docRef = firebase.firestore().collection('posts').doc(commentID);
@@ -22,7 +22,7 @@ export default function Comments({ commentSection }) {
   }
 
   function addComment(newComment) {
-    const postDataCopy = { ...postData };
+    // const postDataCopy = { ...postData };
     docRef
       .update({
         comments: firebase.firestore.FieldValue.arrayUnion(newComment),
@@ -66,12 +66,8 @@ export default function Comments({ commentSection }) {
 
         <div className="commentForm">
           <textarea
+            placeholder="Enter new comment!"
             value={newCommentText}
-            onFocus={(e) => {
-              if (e.target.value === 'Enter new comment!') {
-                setNewCommentText('');
-              }
-            }}
             onChange={(e) => setNewCommentText(e.target.value)}
           />
           <button
@@ -94,6 +90,7 @@ export default function Comments({ commentSection }) {
         <div className="commentsList">
           {postData.comments.map((comment) => (
             <Comment
+              postData={postData}
               thisComment={comment}
               key={comment.id}
               selected={selected}
