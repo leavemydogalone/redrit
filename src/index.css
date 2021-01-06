@@ -40,7 +40,7 @@ body {
 .loginPopUp {
   background-color: white;
   border-radius: 5px;
-  border: solid blue 1px;
+  border: ridge blue 2px;
   box-shadow: 6px 6px 0px 4px rgba(0, 0, 255, 0.2);
   padding: 15px;
   display: flex;
@@ -54,7 +54,10 @@ body {
   margin-left: -11.5vw;
   margin-top: -15vh;
 }
-
+.xButton {
+  display: flex;
+  flex-direction: row-reverse;
+}
 .loginPopUp input {
   min-width: 100px;
 }

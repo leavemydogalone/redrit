@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import firebase from '../firebase';
 
-export default function Login() {
+export default function Login({ setPopUp }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [userName, setUserName] = useState('');
@@ -11,11 +11,42 @@ export default function Login() {
     setPassword('');
   };
 
+  const newUser = {
+    userName,
+    votes: 0,
+    commentPoints: 0,
+    postPoints: 0,
+    comments: [],
+    posts: [],
+    subscribedFeeds: [],
+  };
+
+  const ref = firebase.firestore().collection('users');
+
   const register = () => {
     firebase
       .auth()
       .createUserWithEmailAndPassword(email, password)
       .then(() => {
+        // updates the username on firebase
+        firebase
+          .auth()
+          .currentUser.updateProfile({
+            displayName: userName,
+          })
+          .then(() => {
+            console.log('username created successfully');
+            // creates a new document in the users collection
+            ref
+              .doc(firebase.auth().currentUser.uid)
+              .set(newUser)
+              .catch((err) => {
+                console.log(err);
+              });
+          })
+          .catch((error) => {
+            console.log(error);
+          });
         resetInput();
       })
       .catch((err) => {
@@ -37,6 +68,11 @@ export default function Login() {
 
   return (
     <div className="loginPopUp">
+      <div className="xButton">
+        <button type="button" onClick={() => setPopUp([])}>
+          X
+        </button>
+      </div>
       <h3>Login/Register</h3>
       <input
         type="username"

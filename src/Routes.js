@@ -16,7 +16,7 @@ export default function Routes() {
   const [popUp, setPopUp] = useState([]);
   const handlePopUp = () => {
     if (!popUp[0]) {
-      setPopUp([<Login />]);
+      setPopUp([<Login setPopUp={setPopUp} />]);
     } else {
       setPopUp([]);
     }
