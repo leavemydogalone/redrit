@@ -4,6 +4,7 @@ import firebase from '../firebase';
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [userName, setUserName] = useState('');
 
   const resetInput = () => {
     setEmail('');
@@ -35,22 +36,27 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <h1>Login</h1>
-      <div className="inputBox">
-        <h3>Login/Register</h3>
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="email"
-        />
-        <input
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="password"
-        />
+    <div className="loginPopUp">
+      <h3>Login/Register</h3>
+      <input
+        type="username"
+        value={userName}
+        onChange={(e) => setUserName(e.target.value)}
+        placeholder="Username"
+      />
+      <input
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="email"
+      />
+      <input
+        type="password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        placeholder="password"
+      />
+      <div id="popUpButtonRow">
         <button type="button" onClick={register}>
           Register
         </button>

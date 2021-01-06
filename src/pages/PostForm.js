@@ -24,80 +24,83 @@ export default function PostForm() {
   }
 
   return (
-    <div className="postForm" data-testid="PostForm">
-      <h3>Add new post!</h3>
-      <label htmlFor="group">
-        Group:
-        <select
-          name="group"
-          id="group"
-          value={group}
-          onChange={(e) => setGroup(e.target.value)}
-        >
-          <option value="">Choose Here:</option>
-          <option value="dogs">dogs</option>
-          <option value="newGroup">Enter New Group!</option>
-        </select>
-      </label>
+    <div className="postFormPage">
+      <div className="postForm" data-testid="PostForm">
+        <h3>Add new post!</h3>
+        <label htmlFor="group">
+          Group:
+          <select
+            name="group"
+            id="group"
+            value={group}
+            onChange={(e) => setGroup(e.target.value)}
+          >
+            <option value="">Choose Here:</option>
+            <option value="dogs">dogs</option>
+            <option value="newGroup">Enter New Group!</option>
+          </select>
+        </label>
 
-      <label htmlFor="contentType">
-        Content type:
-        <select
-          name="contentType"
-          id="contentType"
-          value={contentType}
-          onChange={(e) => setContentType(e.target.value)}
-        >
-          <option value="">Choose Here:</option>
-          <option value="text">text</option>
-          <option value="image">image</option>
-        </select>
-      </label>
+        <label htmlFor="contentType">
+          Content type:
+          <select
+            name="contentType"
+            id="contentType"
+            value={contentType}
+            onChange={(e) => setContentType(e.target.value)}
+          >
+            <option value="">Choose Here:</option>
+            <option value="text">text</option>
+            <option value="image">image</option>
+          </select>
+        </label>
 
-      <label htmlFor="title">
-        Title:
-        <input
-          name="title"
-          type="text"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-      </label>
+        <label htmlFor="title">
+          Title:
+          <input
+            name="title"
+            type="text"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+          />
+        </label>
 
-      <label htmlFor="content">
-        <textarea
-          name="content"
-          // defaultValue="Enter text here..."
-          value={content}
-          onFocus={(e) => {
-            if (e.target.value === 'Enter text/url of image here...') {
+        <label htmlFor="content">
+          <textarea
+            name="content"
+            // defaultValue="Enter text here..."
+            value={content}
+            onFocus={(e) => {
+              if (e.target.value === 'Enter text/url of image here...') {
+                setContent('');
+              }
+            }}
+            onChange={(e) => setContent(e.target.value)}
+          />
+        </label>
+        <div>
+          <button
+            type="button"
+            onClick={() => {
+              addPost({
+                title,
+                group,
+                content,
+                id: uuidv4(),
+                contentType,
+                comments: [],
+                timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+              });
+              setTitle('');
+              setGroup('');
               setContent('');
-            }
-          }}
-          onChange={(e) => setContent(e.target.value)}
-        />
-      </label>
-
-      <button
-        type="button"
-        onClick={() => {
-          addPost({
-            title,
-            group,
-            content,
-            id: uuidv4(),
-            contentType,
-            comments: [],
-            timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
-          });
-          setTitle('');
-          setGroup('');
-          setContent('');
-          setContentType('');
-        }}
-      >
-        Submit
-      </button>
+              setContentType('');
+            }}
+          >
+            Submit
+          </button>
+        </div>
+      </div>
     </div>
   );
 }

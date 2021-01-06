@@ -5,13 +5,14 @@ import App from './pages/App';
 import Profile from './pages/Profile';
 import Comments from './pages/Comments';
 import PostForm from './pages/PostForm';
-import SignUpInOutButton from './components/SignUpInOutButton';
+import LoginOutButton from './components/LoginOutButton';
 import Login from './auth/Login';
 
 export default function Routes() {
   const [commentSection, setCommentSection] = useState(
     '9359d93d-a0be-4320-a4b0-5b7256d0babb'
   );
+  // handles the sign in pop up
   const [popUp, setPopUp] = useState([]);
   const handlePopUp = () => {
     if (!popUp[0]) {
@@ -41,8 +42,10 @@ export default function Routes() {
             <li>
               <Link to="/postform">Make a post!</Link>
             </li>
+            <li>
+              <LoginOutButton handlePopUp={handlePopUp} />
+            </li>
           </ul>
-          <SignUpInOutButton handlePopUp={handlePopUp} />
         </div>
         {popUp.map((thing) => thing)}
 
