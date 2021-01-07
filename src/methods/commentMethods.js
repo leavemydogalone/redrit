@@ -11,9 +11,10 @@ export default function newCommentArray(array, parentId, childComment) {
           content: childComment.content,
           user: childComment.user,
           votes: childComment.votes,
+          children: [],
         },
       ];
-    } else if (thing.children) {
+    } else if (thing.children.length > 0) {
       newCommentArray(thing.children, parentId, childComment);
     }
   });

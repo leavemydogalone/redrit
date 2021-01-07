@@ -15,7 +15,11 @@ export default function Comment({
     if (formPopUp.length === 1) return;
     setSelected(true);
     setFormPopUp([
-      <ChildCommentForm thisComment={thisComment} postData={postData} />,
+      <ChildCommentForm
+        thisComment={thisComment}
+        postData={postData}
+        setSelected={setSelected}
+      />,
     ]);
   }
 

@@ -4,7 +4,7 @@ import firebase from '../firebase';
 import Comment from '../components/Comment';
 
 export default function Comments({ commentSection }) {
-  const commentID = '264ddc16-e9fa-476c-b3f9-44a55a8e1443';
+  const commentID = '4b4d9074-43df-42a9-8dbe-df253ec61683';
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState(true);
   const [standInText, setStandInText] = useState('loading...');
@@ -79,6 +79,7 @@ export default function Comments({ commentSection }) {
                 user: 'im a user',
                 votes: 1,
                 timeStamp: firebase.firestore.Timestamp.now(),
+                children: [],
               })
             }
           >
