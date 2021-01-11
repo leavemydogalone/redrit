@@ -13,6 +13,8 @@ export default function Routes() {
     '9359d93d-a0be-4320-a4b0-5b7256d0babb'
   );
   // handles the sign in pop up
+  // should probably have the sign out button return user to default home page
+  // cuz otherwise they may be on the profile page or someones followed list
   const [popUp, setPopUp] = useState([]);
   const handlePopUp = () => {
     if (!popUp[0]) {

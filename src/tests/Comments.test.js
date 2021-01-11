@@ -53,6 +53,30 @@ test('function should return correct array', () => {
   });
 });
 
-test('should ', () => {
-  expect(true).toBeTruthy();
-});
+// describe('reply button', () => {
+//   it('should produce form on click', () => {
+//     const { getAllByText, getByText } = render(
+//       <Comment
+//         selected={selected}
+//         setSelected={setSelected}
+//         thisComment={sampleCommentObj}
+//       />
+//     );
+//     fireEvent.click(getAllByText('reply')[0]);
+//     expect(getByText('Reply to comment...')).toBeTruthy();
+//     expect(getByText('Submit response!')).toBeTruthy();
+//   });
+// });
+
+// describe('nested children', () => {
+//   it('should render children properly', () => {
+//     const { queryAllByTestId } = render(
+//       <Comment
+//         selected={selected}
+//         setSelected={setSelected}
+//         thisComment={sampleCommentObj}
+//       />
+//     );
+//     expect(queryAllByTestId('Comment')[0]).toMatchInlineSnapshot();
+//   });
+// });

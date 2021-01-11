@@ -33,6 +33,8 @@ export default function Login({ setPopUp }) {
           .auth()
           .currentUser.updateProfile({
             displayName: userName,
+            photoUrl:
+              'https://pyxis.nymag.com/v1/imgs/e6c/02c/cbe672af6609198720b69efd475ab5f641-avatar-last-airbender.rsquare.w1200.jpg',
           })
           .then(() => {
             console.log('username created successfully');

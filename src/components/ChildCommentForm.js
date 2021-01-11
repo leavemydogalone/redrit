@@ -11,17 +11,20 @@ export default function ChildCommentForm({
 }) {
   const { currentUser } = useContext(AuthContext);
 
-  console.log(currentUser);
   const [childCommentText, setChildCommentText] = useState('');
 
   const postRef = firebase.firestore().collection('posts').doc(postData.id);
   const commentsRef = firebase.firestore().collection('comments');
 
   async function handleSubmit(childComment) {
+    const childCommentClone = { ...childComment };
+
+    setSelected(false);
+
     const updatedArray = newCommentArray(
       postData.comments,
       thisComment.id,
-      childComment
+      childCommentClone
     );
 
     await postRef.update({ comments: updatedArray }).catch((err) => {
@@ -29,13 +32,11 @@ export default function ChildCommentForm({
     });
 
     await commentsRef
-      .doc(childComment.id)
-      .set(childComment)
+      .doc(childCommentClone.id)
+      .set(childCommentClone)
       .catch((err) => {
         console.log(err);
       });
-
-    setSelected(false);
   }
 
   return (
@@ -48,6 +49,7 @@ export default function ChildCommentForm({
         />
         <button
           type="button"
+          id="childCommentSubmitButton"
           onClick={() =>
             handleSubmit({
               content: childCommentText,

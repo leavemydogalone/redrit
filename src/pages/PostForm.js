@@ -12,6 +12,8 @@ export default function PostForm() {
 
   // maybe make a newgroup state and when the new group is selected
   // from the select then a text is created and the value of the NewGroup from the 'select'
+
+  // want to also add each post to its 'group' document
   const postsRef = firebase.firestore().collection('posts');
 
   function addPost(newPost) {

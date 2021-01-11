@@ -9,7 +9,8 @@ body {
 }
 
 .App,
-.commentPage {
+.commentPage,
+.profilePage {
   background-color: rgba(119, 240, 212, 0.54);
   height: 100%;
   padding-top: 5px;
@@ -54,10 +55,12 @@ body {
   margin-left: -11.5vw;
   margin-top: -15vh;
 }
+
 .xButton {
   display: flex;
   flex-direction: row-reverse;
 }
+
 .loginPopUp input {
   min-width: 100px;
 }
@@ -123,12 +126,12 @@ img {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: auto;
 }
 
 .postForm * {
   margin: auto;
 }
+
 .postForm textarea {
   min-height: 20vh;
   min-width: 20vw;
@@ -170,7 +173,8 @@ img {
   margin: auto 5px;
 }
 
-.commentPageContainer {
+.commentPageContainer,
+.profilePageContainer {
   background-color: lightgreen;
   border-radius: 5px;
   /* box-shadow: 6px 6px 0px 4px rgba(0, 0, 255, 0.2); */
@@ -185,13 +189,19 @@ img {
 }
 
 .comment,
-.commentPostContent {
+.commentPostContent,
+.profileMain,
+.profileBar {
   background-color: rgb(37, 189, 61);
   border-radius: 5px;
   border: solid 2px #2d3128;
   margin: 2px;
   display: block;
-  padding-left: 15px;
+  padding: 15px;
+}
+
+.comment {
+  padding: 0px 0px 0px 15px;
 }
 
 .commentFooter {
@@ -209,4 +219,27 @@ img {
 
 .comment textarea {
   margin-left: 1vw;
+}
+
+.profileMain {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+}
+
+.profileMain *,
+.profileBar * {
+  margin: auto;
+}
+.profileMain img {
+  border-radius: 50%;
+  margin: auto;
+}
+
+.profileBar {
+  display: flex;
+}
+
+#profilePostsAndComments {
+  flex-direction: column;
 }
