@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import firebase from '../firebase';
+import { AuthContext } from '../auth/Auth';
 
 export default function PostForm() {
+  const { currentUser } = useContext(AuthContext);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('Enter text/url of image here...');
   const [group, setGroup] = useState('');
@@ -22,6 +24,7 @@ export default function PostForm() {
       .set(newPost)
       .catch((err) => {
         console.log(err);
+        alert('Please make sure all fields are filled out!');
       });
   }
 
@@ -85,13 +88,17 @@ export default function PostForm() {
             type="button"
             onClick={() => {
               addPost({
+                uid: currentUser.uid,
+                user: currentUser.displayName,
                 title,
                 group,
                 content,
                 id: uuidv4(),
                 contentType,
                 comments: [],
-                timeStamp: firebase.firestore.FieldValue.serverTimestamp(),
+                votes: 1,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
               });
               setTitle('');
               setGroup('');

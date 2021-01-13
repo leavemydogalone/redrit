@@ -12,7 +12,7 @@ body {
 .commentPage,
 .profilePage {
   background-color: rgba(119, 240, 212, 0.54);
-  height: 100%;
+  min-height: 100%;
   padding-top: 5px;
 }
 

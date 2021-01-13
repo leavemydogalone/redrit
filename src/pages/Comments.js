@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
 import Comment from '../components/Comment';
 
 export default function Comments({ commentSection }) {
-  const commentID = '4b4d9074-43df-42a9-8dbe-df253ec61683';
+  const postRef = commentSection;
+
+  const { currentUser } = useContext(AuthContext);
+
   const [postData, setPostData] = useState({});
   const [loading, setLoading] = useState(true);
   const [standInText, setStandInText] = useState('loading...');
   const [newCommentText, setNewCommentText] = useState('');
   const [selected, setSelected] = useState(false);
 
-  const docRef = firebase.firestore().collection('posts').doc(commentID);
+  const docRef = firebase.firestore().collection('posts').doc(postRef);
   const commentsRef = firebase.firestore().collection('comments');
 
   function getPostData() {
@@ -76,9 +80,11 @@ export default function Comments({ commentSection }) {
               handleSubmit({
                 content: newCommentText,
                 id: uuidv4(),
-                user: 'im a user',
+                user: currentUser.displayName,
+                uid: currentUser.uid,
                 votes: 1,
-                timeStamp: firebase.firestore.Timestamp.now(),
+                createdAt: firebase.firestore.Timestamp.now(),
+                lastUpdate: firebase.firestore.Timestamp.now(),
                 children: [],
               })
             }

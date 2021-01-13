@@ -61,6 +61,7 @@ export default function ChildCommentForm({
               post: postData.id,
               children: [],
               timeStamp: firebase.firestore.Timestamp.now(),
+              lastUpdate: firebase.firestore.Timestamp.now(),
             })
           }
         >

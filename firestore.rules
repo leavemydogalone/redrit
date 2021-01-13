@@ -1,0 +1,114 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    match /groups /{itemId} {
+      allow read: if true;
+      allow create: if isSignedIn();
+      allow update: if false;
+      allow delete: if false;
+      
+    }
+    match /comments /{itemId} {
+      allow read: if true;
+      allow create: if isSignedIn();
+      allow update: if isSignedIn();
+      allow delete: if isSignedIn();
+      
+    }
+    match /users /{itemId} {
+      allow read: if true;
+      allow create: if request.auth == null;
+      allow update: if request.auth.uid == resource.data.uid;
+      allow delete: if request.auth.uid == resource.data.uid;
+      
+    }
+match /posts/{itemId}{
+
+      allow read: if true;
+
+      allow create: if isValidPost(request.resource.data) &&
+        isOwner(request.resource.data) &&
+        isSignedIn() &&
+        checkKeys();
+
+      allow update: if true;
+      // isValidPost(request.resource.data) &&
+      //   isOwner(request.resource.data) &&
+      //   isOwner(resource.data) &&
+      //   isSignedIn() &&
+      //   isCalm() &&
+      //   checkKeys();
+
+      allow delete: if isOwner(resource.data) &&
+        isSignedIn();
+
+      // FUNCTIONS
+  
+      function isOwner(post) {
+        return request.auth.uid == post.uid;
+      }
+  
+      function isValidPost(post) {
+        return (
+          // post.title
+          post.title is string &&
+          post.title != '' &&
+          // post.content
+          post.content is string &&
+          post.content != '' &&
+          // post.group
+          post.group is string &&
+          post.group != '' &&
+          // post.contentType
+          post.contentType is string &&
+          post.contentType != '' &&
+          // post.createdAt
+          post.createdAt is timestamp &&
+          post.createdAt != '' &&
+          // post.lastUpdate
+          post.lastUpdate is timestamp &&
+          post.lastUpdate != '' &&
+          // post.uid
+          post.uid is string &&
+          post.uid != '' &&
+          // post.user
+          post.user is string &&
+          post.user != '' &&
+          // post.id
+          post.id is string &&
+          post.id != '' &&
+          // post.comments
+          post.comments is list &&
+          post.comments != '' &&
+          // post.votes
+          post.votes is number &&
+          post.votes == 1 &&
+          post.votes != '' 
+        );
+      }
+
+      function isCalm() {
+        return ( 
+          request.time > resource.data.lastUpdate +
+          duration.value(10, 's')
+        ); 
+      }
+
+      function checkKeys() {
+        let requiredFields = ['title','content','group','contentType','createdAt','lastUpdate','uid','user','id','comments','votes'];
+        let optionalFields = [];
+        let allFields = requiredFields.concat(optionalFields);
+        return request.resource.data.keys().hasAll(requiredFields) &&
+        request.resource.data.keys().hasOnly(allFields)
+      }
+    }
+
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+    
+    
+  }
+}
