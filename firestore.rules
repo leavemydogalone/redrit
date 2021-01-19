@@ -32,7 +32,8 @@ match /posts/{itemId}{
         isSignedIn() &&
         checkKeys();
 
-      allow update: if true;
+      allow update: if isSignedIn() &&
+        isCalm();
       // isValidPost(request.resource.data) &&
       //   isOwner(request.resource.data) &&
       //   isOwner(resource.data) &&
