@@ -3,26 +3,27 @@ import { v4 as uuidv4 } from 'uuid';
 import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
 import Comment from '../components/Comment';
+import { addComment } from '../methods/firebaseMethods';
+import { nest } from '../methods/commentMethods';
 
 export default function Comments({ commentSection }) {
   const postRef = '5117175d-4f70-4e3d-8f96-3e8b10201afd';
 
   const { currentUser } = useContext(AuthContext);
 
-  // need to create a comments data
-
   const [postData, setPostData] = useState({});
   const [commentsData, setCommentsData] = useState([]);
+  const [nestedCommentsArray, setNestedCommentsArray] = useState([]);
   const [loading, setLoading] = useState(true);
   const [standInText, setStandInText] = useState('loading...');
   const [newCommentText, setNewCommentText] = useState('');
   const [selected, setSelected] = useState(false);
 
-  // change here
+  // all firebase references
   const docRef = firebase.firestore().collection('posts').doc(postRef);
   const postCommentsRef = docRef.collection('comments');
-  const commentsRef = firebase.firestore().collection('comments');
 
+  // a single get of post data
   function getPostData() {
     docRef.onSnapshot((doc) => {
       setPostData(doc.data());
@@ -30,6 +31,7 @@ export default function Comments({ commentSection }) {
     });
   }
 
+  // subscription to all comments of this post for real time updates
   function getCommentsData() {
     postCommentsRef.onSnapshot((querySnapShot) => {
       const items = [];
@@ -40,41 +42,30 @@ export default function Comments({ commentSection }) {
     });
   }
 
-  // probably just pass this to the comment
-  // change some logic
-  function addComment(newComment) {
-    // const postDataCopy = { ...postData };
-    docRef
-      .update({
-        comments: firebase.firestore.FieldValue.arrayUnion(newComment),
-      })
-      .then(() => {
-        commentsRef
-          .doc(newComment.id)
-          .set({ post: commentSection, ...newComment });
-      })
-      .catch((err) => {
-        //  console.log(err)
-      });
-  }
-
+  // adds the comment to firestore and resets the placeHolder text
   function handleSubmit(newComment) {
-    addComment(newComment);
+    addComment(postCommentsRef, newComment);
     setNewCommentText('Enter new comment!');
   }
 
   useEffect(() => {
     getPostData();
     getCommentsData();
-    console.log(commentsData);
   }, []);
+
+  useEffect(() => {
+    if (commentsData) {
+      setLoading(true);
+      const nested = nest(commentsData, null);
+      setNestedCommentsArray(nested);
+      setLoading(false);
+    }
+  }, [commentsData]);
 
   if (loading) {
     return <h1>{standInText}</h1>;
   }
 
-  // probably also want the post info on this page at the top. can just have user
-  // , content, votes, and a report button
   return (
     <div className="commentPage">
       <div className="commentPageContainer">
@@ -92,18 +83,20 @@ export default function Comments({ commentSection }) {
             value={newCommentText}
             onChange={(e) => setNewCommentText(e.target.value)}
           />
+
           <button
             type="button"
             onClick={() =>
               handleSubmit({
                 content: newCommentText,
+                parentId: null,
                 id: uuidv4(),
                 user: currentUser.displayName,
                 uid: currentUser.uid,
                 votes: 1,
                 createdAt: firebase.firestore.Timestamp.now(),
                 lastUpdate: firebase.firestore.Timestamp.now(),
-                children: [],
+                post: postData.id,
               })
             }
           >
@@ -113,7 +106,7 @@ export default function Comments({ commentSection }) {
           </button>
         </div>
         <div className="commentsList">
-          {postData.comments.map((comment) => (
+          {nestedCommentsArray.map((comment) => (
             <Comment
               postData={postData}
               thisComment={comment}

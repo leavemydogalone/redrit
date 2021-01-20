@@ -8,14 +8,18 @@ export default function Comment({
   selected,
   postData,
 }) {
+  // using array since .map can run on an empty array so I dont need to use any conditional code
+  // for when to render the form pop up
   const [formPopUp, setFormPopUp] = useState([]);
 
+  // logic to maintain only one child comment form at a time on page
   async function handleFormPopUp() {
     await setSelected(false);
     if (formPopUp.length === 1) return;
     setSelected(true);
     setFormPopUp([
       <ChildCommentForm
+        key={1}
         thisComment={thisComment}
         postData={postData}
         setSelected={setSelected}
@@ -23,6 +27,7 @@ export default function Comment({
     ]);
   }
 
+  // if another comment is 'selected' it removes the form from this comment
   useEffect(() => {
     if (!selected) setFormPopUp([]);
   }, [selected]);

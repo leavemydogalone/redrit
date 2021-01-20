@@ -22,10 +22,10 @@ export function newCommentArray(array, parentId, childComment) {
   return arrayCopy;
 }
 
-export function nest(data, parentId = null) {
+export function nest(data, parentId) {
   return data.reduce((r, e) => {
     const obj = { ...e };
-    if (parentId === e.parent_id) {
+    if (parentId === e.parentId) {
       const children = nest(data, e.id);
       if (children.length) obj.children = children;
       r.push(obj);
@@ -33,3 +33,14 @@ export function nest(data, parentId = null) {
     return r;
   }, []);
 }
+// export function nest(data, parentId = null) {
+//   return data.reduce((r, e) => {
+//     const obj = { ...e };
+//     if (parentId === e.parent_id) {
+//       const children = nest(data, e.id);
+//       if (children.length) obj.children = children;
+//       r.push(obj);
+//     }
+//     return r;
+//   }, []);
+// }

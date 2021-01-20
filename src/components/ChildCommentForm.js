@@ -3,6 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
 import { newCommentArray } from '../methods/commentMethods';
+import { addComment } from '../methods/firebaseMethods';
 
 export default function ChildCommentForm({
   thisComment,
@@ -15,24 +16,15 @@ export default function ChildCommentForm({
 
   // change here to .doc.collection('comments')
   const postRef = firebase.firestore().collection('posts').doc(postData.id);
+  const postCommentsRef = postRef.collection('comments');
   const commentsRef = firebase.firestore().collection('comments');
 
   async function handleSubmit(childComment) {
+    if (childCommentText === '') return;
     const childCommentClone = { ...childComment };
+    setChildCommentText('');
 
-    setSelected(false);
-
-    // change here
-    const updatedArray = newCommentArray(
-      postData.comments,
-      thisComment.id,
-      childCommentClone
-    );
-
-    // change here to a set
-    await postRef.update({ comments: updatedArray }).catch((err) => {
-      console.log(err);
-    });
+    await addComment(postCommentsRef, childComment);
 
     await commentsRef
       .doc(childCommentClone.id)
@@ -40,6 +32,7 @@ export default function ChildCommentForm({
       .catch((err) => {
         console.log(err);
       });
+    setSelected(false);
   }
 
   return (
@@ -60,9 +53,8 @@ export default function ChildCommentForm({
               user: currentUser.displayName,
               userId: currentUser.uid,
               votes: 1,
-              parentComment: thisComment.id,
+              parentId: thisComment.id,
               post: postData.id,
-              children: [],
               timeStamp: firebase.firestore.Timestamp.now(),
               lastUpdate: firebase.firestore.Timestamp.now(),
             })
