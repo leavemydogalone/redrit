@@ -1,4 +1,4 @@
-export default function newCommentArray(array, parentId, childComment) {
+export function newCommentArray(array, parentId, childComment) {
   const arrayCopy = array.slice();
 
   arrayCopy.forEach((thing) => {
@@ -20,4 +20,16 @@ export default function newCommentArray(array, parentId, childComment) {
   });
 
   return arrayCopy;
+}
+
+export function nest(data, parentId = null) {
+  return data.reduce((r, e) => {
+    const obj = { ...e };
+    if (parentId === e.parent_id) {
+      const children = nest(data, e.id);
+      if (children.length) obj.children = children;
+      r.push(obj);
+    }
+    return r;
+  }, []);
 }

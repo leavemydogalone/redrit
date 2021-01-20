@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
-import newCommentArray from '../methods/commentMethods';
+import { newCommentArray } from '../methods/commentMethods';
 
 export default function ChildCommentForm({
   thisComment,
@@ -13,6 +13,7 @@ export default function ChildCommentForm({
 
   const [childCommentText, setChildCommentText] = useState('');
 
+  // change here to .doc.collection('comments')
   const postRef = firebase.firestore().collection('posts').doc(postData.id);
   const commentsRef = firebase.firestore().collection('comments');
 
@@ -21,12 +22,14 @@ export default function ChildCommentForm({
 
     setSelected(false);
 
+    // change here
     const updatedArray = newCommentArray(
       postData.comments,
       thisComment.id,
       childCommentClone
     );
 
+    // change here to a set
     await postRef.update({ comments: updatedArray }).catch((err) => {
       console.log(err);
     });

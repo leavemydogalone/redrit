@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import firebase from '../firebase';
+import { addPost } from '../methods/firebaseMethods';
 import { AuthContext } from '../auth/Auth';
 
 export default function PostForm() {
@@ -16,17 +17,6 @@ export default function PostForm() {
   // from the select then a text is created and the value of the NewGroup from the 'select'
 
   // want to also add each post to its 'group' document
-  const postsRef = firebase.firestore().collection('posts');
-
-  function addPost(newPost) {
-    postsRef
-      .doc(newPost.id)
-      .set(newPost)
-      .catch((err) => {
-        console.log(err);
-        alert('Please make sure all fields are filled out!');
-      });
-  }
 
   return (
     <div className="postFormPage">
@@ -95,7 +85,7 @@ export default function PostForm() {
                 content,
                 id: uuidv4(),
                 contentType,
-                comments: [],
+                comments: 0,
                 votes: 1,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),

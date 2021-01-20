@@ -23,7 +23,8 @@ service cloud.firestore {
       allow delete: if request.auth.uid == resource.data.uid;
       
     }
-match /posts/{itemId}{
+
+    match /posts/{itemId} {
 
       allow read: if true;
 
@@ -80,7 +81,7 @@ match /posts/{itemId}{
           post.id is string &&
           post.id != '' &&
           // post.comments
-          post.comments is list &&
+          post.comments is number &&
           post.comments != '' &&
           // post.votes
           post.votes is number &&
@@ -102,6 +103,13 @@ match /posts/{itemId}{
         let allFields = requiredFields.concat(optionalFields);
         return request.resource.data.keys().hasAll(requiredFields) &&
         request.resource.data.keys().hasOnly(allFields)
+      }
+
+      match /comments/{itemId} {
+        allow read: if true;
+        allow create: if isSignedIn();
+        allow update: if isSignedIn();
+        allow delete: if isSignedIn();
       }
     }
 

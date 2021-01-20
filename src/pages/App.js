@@ -11,14 +11,17 @@ function App({ commentsLink }) {
 
   function getPosts() {
     setLoading(true);
-    ref.get().then((querySnapshot) => {
-      const items = [];
-      querySnapshot.forEach((doc) => {
-        items.push(doc.data());
-      });
-      setPosts(items);
-      setLoading(false);
-    });
+    ref
+      .get()
+      .then((querySnapshot) => {
+        const items = [];
+        querySnapshot.forEach((doc) => {
+          items.push(doc.data());
+        });
+        setPosts(items);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
   }
 
   useEffect(() => {

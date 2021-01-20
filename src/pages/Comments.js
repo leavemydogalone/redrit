@@ -5,17 +5,22 @@ import firebase from '../firebase';
 import Comment from '../components/Comment';
 
 export default function Comments({ commentSection }) {
-  const postRef = commentSection;
+  const postRef = '5117175d-4f70-4e3d-8f96-3e8b10201afd';
 
   const { currentUser } = useContext(AuthContext);
 
+  // need to create a comments data
+
   const [postData, setPostData] = useState({});
+  const [commentsData, setCommentsData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [standInText, setStandInText] = useState('loading...');
   const [newCommentText, setNewCommentText] = useState('');
   const [selected, setSelected] = useState(false);
 
+  // change here
   const docRef = firebase.firestore().collection('posts').doc(postRef);
+  const postCommentsRef = docRef.collection('comments');
   const commentsRef = firebase.firestore().collection('comments');
 
   function getPostData() {
@@ -25,6 +30,18 @@ export default function Comments({ commentSection }) {
     });
   }
 
+  function getCommentsData() {
+    postCommentsRef.onSnapshot((querySnapShot) => {
+      const items = [];
+      querySnapShot.forEach((doc) => {
+        items.push(doc.data());
+      });
+      setCommentsData(items);
+    });
+  }
+
+  // probably just pass this to the comment
+  // change some logic
   function addComment(newComment) {
     // const postDataCopy = { ...postData };
     docRef
@@ -37,7 +54,7 @@ export default function Comments({ commentSection }) {
           .set({ post: commentSection, ...newComment });
       })
       .catch((err) => {
-        console.log(err);
+        //  console.log(err)
       });
   }
 
@@ -48,7 +65,8 @@ export default function Comments({ commentSection }) {
 
   useEffect(() => {
     getPostData();
-    console.log(postData);
+    getCommentsData();
+    console.log(commentsData);
   }, []);
 
   if (loading) {
