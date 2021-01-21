@@ -51,11 +51,11 @@ export default function ChildCommentForm({
               content: childCommentText,
               id: uuidv4(),
               user: currentUser.displayName,
-              userId: currentUser.uid,
+              uid: currentUser.uid,
               votes: 1,
               parentId: thisComment.id,
               post: postData.id,
-              timeStamp: firebase.firestore.Timestamp.now(),
+              createdAt: firebase.firestore.Timestamp.now(),
               lastUpdate: firebase.firestore.Timestamp.now(),
             })
           }

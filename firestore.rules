@@ -28,6 +28,7 @@ service cloud.firestore {
 
       allow read: if true;
 
+// check profile for the time of last submitted post and limit that to one per minute
       allow create: if isValidPost(request.resource.data) &&
         isOwner(request.resource.data) &&
         isSignedIn() &&
@@ -104,15 +105,81 @@ service cloud.firestore {
         return request.resource.data.keys().hasAll(requiredFields) &&
         request.resource.data.keys().hasOnly(allFields)
       }
-
-      match /comments/{itemId} {
-        allow read: if true;
-        allow create: if isSignedIn();
-        allow update: if isSignedIn();
-        allow delete: if isSignedIn();
-      }
     }
 
+    match /posts/{itemId} {
+      match /comments/{itemId} {
+        allow read: if true
+
+      allow create: if isValidComment(request.resource.data) &&
+        isSignedIn() &&
+        checkKeys();
+
+      allow update: if isValidComment(request.resource.data) &&
+        isOwner(request.resource.data) &&
+        isOwner(resource.data) &&
+        isSignedIn() &&
+        isCalm() &&
+        checkKeys();
+
+      allow delete: if isOwner(resource.data) &&
+        isSignedIn();
+
+      // FUNCTIONS
+  
+      function isOwner(comment) {
+        return request.auth.uid == comment.uid;
+      }
+
+      function isValidComment(comment) {
+        return (
+          // comment.content
+          comment.content is string &&
+          comment.content != '' &&
+          // comment.id
+          comment.id is string &&
+          comment.id != '' &&
+          // comment.lastUpdate
+          comment.lastUpdate is timestamp &&
+          comment.lastUpdate != '' &&
+          // comment.post
+          comment.post is string &&
+          comment.post != '' &&
+          // comment.user
+          comment.user is string &&
+          comment.user != '' &&
+          // comment.uid
+          comment.uid is string &&
+          comment.uid != '' &&
+          // comment.votes
+          comment.votes is number &&
+          comment.votes == 1 &&
+          comment.votes != '' &&
+          // comment.createdAt
+          comment.createdAt is timestamp &&
+          comment.createdAt != '' &&
+          comment.parentId == null || 
+          comment.parentId is string &&
+          comment.parentId != ''
+        );
+      }
+      
+      function isCalm() {
+        return ( 
+          request.time > resource.data.lastUpdate +
+          duration.value(5, 's')
+        ); 
+      }
+
+      function checkKeys() {
+        let requiredFields = ['content','id','lastUpdate','parentId', 'post','user','uid','votes','createdAt'];
+        let optionalFields = [];
+        let allFields = requiredFields.concat(optionalFields);
+        return request.resource.data.keys().hasAll(requiredFields) &&
+        request.resource.data.keys().hasOnly(allFields)
+      }
+      }
+    }
 
     function isSignedIn() {
       return request.auth != null;

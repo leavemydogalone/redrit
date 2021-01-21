@@ -44,15 +44,20 @@ export default function Comments({ commentSection }) {
 
   // adds the comment to firestore and resets the placeHolder text
   function handleSubmit(newComment) {
-    addComment(postCommentsRef, newComment);
-    setNewCommentText('Enter new comment!');
+    if (newCommentText === '') return;
+    const commentClone = { ...newComment };
+    setNewCommentText('');
+
+    addComment(postCommentsRef, commentClone);
   }
 
+  // starts subscription on load. May need to cancel them when the page is changed
   useEffect(() => {
     getPostData();
     getCommentsData();
   }, []);
 
+  // creates a nested array to easily .map through for rendering
   useEffect(() => {
     if (commentsData) {
       setLoading(true);
@@ -62,6 +67,7 @@ export default function Comments({ commentSection }) {
     }
   }, [commentsData]);
 
+  // should add in another stand in text should the gets/subscriptions fail
   if (loading) {
     return <h1>{standInText}</h1>;
   }
