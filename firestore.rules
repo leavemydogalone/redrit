@@ -16,14 +16,75 @@ service cloud.firestore {
       allow delete: if isSignedIn();
       
     }
-    match /users /{itemId} {
-      allow read: if true;
-      allow create: if request.auth == null;
-      allow update: if request.auth.uid == resource.data.uid;
-      allow delete: if request.auth.uid == resource.data.uid;
-      
-    }
+    match /users/{itemId}{
 
+      allow read: if true
+
+      allow create: if isValidUser(request.resource.data) &&
+        isSignedIn() &&
+        checkKeys();
+
+      allow update: if isValidUser(request.resource.data) &&
+        isOwner(request.resource.data) &&
+        isOwner(resource.data) &&
+        isSignedIn() &&
+        isCalm() &&
+        checkKeys();
+
+      allow delete: if isOwner(resource.data) &&
+        isSignedIn();
+
+      // FUNCTIONS
+  
+      function isOwner(user) {
+        return request.auth.uid == user.uid;
+      }
+  
+      function isValidUser(user) {
+        return (
+          // user.uid
+          user.uid is string &&
+          user.uid != '' &&
+          // user.commentPoints
+          user.commentPoints is number &&
+          user.commentPoints == 0 &&
+          user.commentPoints != '' &&
+          // user.postPoints
+          user.postPoints is number &&
+          user.postPoints == 0 &&
+          user.postPoints != '' &&
+          // user.subscribedFeeds
+          user.subscribedFeeds is list &&
+          user.subscribedFeeds != '' &&
+          // user.displayName
+          user.displayName is string &&
+          user.displayName != '' &&
+          // user.posts
+          user.posts is number &&
+          user.posts == 0 &&
+          user.posts != '' &&
+          // user.comments
+          user.comments is number &&
+          user.comments == 0 &&
+          user.comments != '' 
+        );
+      }
+
+      function isCalm() {
+        return ( 
+          request.time > resource.data.lastUpdate +
+          duration.value(5, 's')
+        ); 
+      }
+
+      function checkKeys() {
+        let requiredFields = ['uid','commentPoints','postPoints','subscribedFeeds','displayName','posts','comments'];
+        let optionalFields = [];
+        let allFields = requiredFields.concat(optionalFields);
+        return request.resource.data.keys().hasAll(requiredFields) &&
+        request.resource.data.keys().hasOnly(allFields)
+      }
+    }
     match /posts/{itemId} {
 
       allow read: if true;
@@ -35,13 +96,11 @@ service cloud.firestore {
         checkKeys();
 
       allow update: if isSignedIn() &&
-        isCalm();
-      // isValidPost(request.resource.data) &&
-      //   isOwner(request.resource.data) &&
-      //   isOwner(resource.data) &&
-      //   isSignedIn() &&
-      //   isCalm() &&
-      //   checkKeys();
+        isCalm() &&
+        isValidPost(request.resource.data) &&
+        isOwner(request.resource.data) &&
+        isOwner(resource.data) &&
+        checkKeys();
 
       allow delete: if isOwner(resource.data) &&
         isSignedIn();

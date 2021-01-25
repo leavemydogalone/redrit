@@ -7,7 +7,7 @@ import { addComment } from '../methods/firebaseMethods';
 import { nest } from '../methods/commentMethods';
 
 export default function Comments({ commentSection }) {
-  const postRef = '5117175d-4f70-4e3d-8f96-3e8b10201afd';
+  // const postRef = '5117175d-4f70-4e3d-8f96-3e8b10201afd';
 
   const { currentUser } = useContext(AuthContext);
 
@@ -20,7 +20,7 @@ export default function Comments({ commentSection }) {
   const [selected, setSelected] = useState(false);
 
   // all firebase references
-  const docRef = firebase.firestore().collection('posts').doc(postRef);
+  const docRef = firebase.firestore().collection('posts').doc(commentSection);
   const postCommentsRef = docRef.collection('comments');
 
   // a single get of post data

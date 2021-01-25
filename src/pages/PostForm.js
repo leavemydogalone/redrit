@@ -7,7 +7,7 @@ import { AuthContext } from '../auth/Auth';
 export default function PostForm() {
   const { currentUser } = useContext(AuthContext);
   const [title, setTitle] = useState('');
-  const [content, setContent] = useState('Enter text/url of image here...');
+  const [content, setContent] = useState('');
   const [group, setGroup] = useState('');
   const [contentType, setContentType] = useState('');
   // must add a funtion that pulls the different groups,
@@ -63,13 +63,8 @@ export default function PostForm() {
         <label htmlFor="content">
           <textarea
             name="content"
-            // defaultValue="Enter text here..."
+            placeholder="Enter text/url of image here..."
             value={content}
-            onFocus={(e) => {
-              if (e.target.value === 'Enter text/url of image here...') {
-                setContent('');
-              }
-            }}
             onChange={(e) => setContent(e.target.value)}
           />
         </label>
