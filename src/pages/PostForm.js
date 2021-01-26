@@ -1,7 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import firebase from '../firebase';
-import { addPost } from '../methods/firebaseMethods';
+import { addPost, addGroup } from '../methods/firebaseMethods';
 import { AuthContext } from '../auth/Auth';
 import NewGroupForm from '../components/NewGroupForm';
 
@@ -10,16 +10,10 @@ export default function PostForm() {
   const [feedsListData, setFeedsListData] = useState([]);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
-  const [group, setGroup] = useState('');
-  const [contentType, setContentType] = useState('');
+  const [group, setGroup] = useState('cats');
+  const [contentType, setContentType] = useState('text');
   const [newGroupPopUp, setNewGroupPopUp] = useState(false);
 
-  // or maybe just let them contentType it in and let them create new ones if none exist
-
-  // maybe make a newgroup state and when the new group is selected
-  // from the select then a text is created and the value of the NewGroup from the 'select'
-
-  // want to also add each post to its 'group' document
   const groupsRef = firebase.firestore().collection('groups');
 
   function getFeedsList() {
@@ -37,13 +31,29 @@ export default function PostForm() {
   }, []);
 
   const feedOptions = feedsListData.map((feed) => (
-    <option value={feed}>{feed}</option>
+    <option value={feed} key={feed}>
+      {feed}
+    </option>
   ));
 
   function handlePopUp() {
     setNewGroupPopUp(!newGroupPopUp);
     setGroup('');
   }
+
+  // something not working here
+  async function handleSubmit(newPost) {
+    const checkNewGroupName = feedsListData.includes(group);
+    if (!checkNewGroupName) addGroup({ title: group });
+
+    addPost(newPost);
+    setTitle('');
+    setGroup('');
+    setContent('');
+    setContentType('');
+  }
+
+  console.log(feedsListData, group, title, content, contentType);
   return (
     <div className="postFormPage">
       <div className="postForm" data-testid="PostForm">
@@ -56,9 +66,6 @@ export default function PostForm() {
             value={group}
             onChange={(e) => setGroup(e.target.value)}
           >
-            <option value="" disabled selected>
-              Select your option:
-            </option>
             {newGroupPopUp ? '' : feedOptions}
           </select>
         </label>
@@ -67,7 +74,11 @@ export default function PostForm() {
           <button type="button" id="newGroupButton" onClick={handlePopUp}>
             +
           </button>
-          {newGroupPopUp ? <NewGroupForm /> : ''}
+          {newGroupPopUp ? (
+            <NewGroupForm setGroup={setGroup} group={group} />
+          ) : (
+            ''
+          )}
         </div>
 
         <label htmlFor="contentType">
@@ -78,9 +89,6 @@ export default function PostForm() {
             value={contentType}
             onChange={(e) => setContentType(e.target.value)}
           >
-            <option value="" disabled selected>
-              Choose here:
-            </option>
             <option value="text">text</option>
             <option value="image">image</option>
           </select>
@@ -93,6 +101,8 @@ export default function PostForm() {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
+            minLength="2"
+            required
           />
         </label>
 
@@ -102,6 +112,8 @@ export default function PostForm() {
             placeholder="Enter text/url of image here..."
             value={content}
             onChange={(e) => setContent(e.target.value)}
+            minLength="2"
+            required
           />
         </label>
         <div>
@@ -109,7 +121,7 @@ export default function PostForm() {
             id="newPostSubmit"
             type="button"
             onClick={() => {
-              addPost({
+              handleSubmit({
                 uid: currentUser.uid,
                 user: currentUser.displayName,
                 title,
@@ -122,10 +134,6 @@ export default function PostForm() {
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
               });
-              setTitle('');
-              setGroup('');
-              setContent('');
-              setContentType('');
             }}
           >
             Submit

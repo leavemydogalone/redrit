@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export default function NewGroupForm({ feedsList, setGroup, group }) {
+export default function NewGroupForm({ setGroup, group }) {
   return (
     <div className="newGroupForm">
       <label htmlFor="newGroup">
@@ -10,6 +10,8 @@ export default function NewGroupForm({ feedsList, setGroup, group }) {
           value={group}
           onChange={(e) => setGroup(e.target.value)}
           placeholder="Enter new group here"
+          minLength="2"
+          required
         />
       </label>
     </div>
