@@ -139,6 +139,13 @@ img {
 
 .postForm button {
   width: fit-content;
+}
+
+#newGroupButton {
+  font-size: small;
+}
+
+#newPostSubmit {
   min-width: 10vw;
 }
 /* 
