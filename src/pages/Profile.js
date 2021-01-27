@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
+import Spinner from '../components/Spinner';
 
 export default function Profile() {
   const [userData, setUserData] = useState({});
@@ -33,7 +34,8 @@ export default function Profile() {
       </div>
     );
 
-  if (loading) return <h1>loading</h1>;
+  if (loading) return <Spinner />;
+
   return (
     <div className="profilePage">
       <div className="profilePageContainer">

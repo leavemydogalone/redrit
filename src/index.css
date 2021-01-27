@@ -11,7 +11,7 @@ body {
 .App,
 .commentPage,
 .profilePage {
-  background-color: rgba(119, 240, 212, 0.54);
+  background-color: rgba(230, 228, 228, 0.48);
   min-height: 100%;
   padding-top: 5px;
 }
@@ -19,7 +19,7 @@ body {
 .topBar {
   height: 10vh;
   display: flex;
-  background-color: #9484ddab;
+  background-color: #25bd3d;
   border-bottom: ridge 2px;
   top: 0px;
 }
@@ -31,11 +31,13 @@ body {
 .topBar li {
   margin-right: 20px;
   display: block;
+  text-decoration: none;
 }
 
 .feedSelectorBar {
   margin-left: 3%;
 }
+
 .loginPopUp {
   background-color: white;
   border-radius: 5px;
@@ -69,6 +71,11 @@ body {
   flex-wrap: wrap;
 }
 
+.postBody {
+  background-color: #90ee9082;
+  padding: 4px;
+  border-radius: 2px;
+}
 .topBanner {
   margin-bottom: 5px;
   font-size: smaller;

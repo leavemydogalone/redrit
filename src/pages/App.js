@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Post from '../components/Post';
 import firebase from '../firebase';
+import Spinner from '../components/Spinner';
 
 function App({ commentsLink }) {
   const [feed, setFeed] = useState('all');
@@ -54,7 +55,7 @@ function App({ commentsLink }) {
   ));
 
   if (loading) {
-    return <h1 data-testid="App">One second, must load posts</h1>;
+    return <Spinner />;
   }
 
   return (

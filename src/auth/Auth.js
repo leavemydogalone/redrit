@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../firebase';
+import Spinner from '../components/Spinner';
 
 export const AuthContext = React.createContext();
 
@@ -16,11 +17,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   if (loading) {
-    return (
-      <div>
-        <h1>Loading User...</h1>
-      </div>
-    );
+    return <Spinner />;
   }
 
   return (
