@@ -9,10 +9,6 @@ import LoginOutButton from './components/LoginOutButton';
 import Login from './auth/Login';
 
 export default function Routes() {
-  const [commentSection, setCommentSection] = useState(
-    'b5768112-a1a9-4dc0-a17b-d500d148f442'
-  );
-  // handles the sign in pop up
   // should probably have the sign out button return user to default home page
   // cuz otherwise they may be on the profile page or someones followed list
   const [popUp, setPopUp] = useState([]);
@@ -23,12 +19,6 @@ export default function Routes() {
       setPopUp([]);
     }
   };
-
-  const commentsLink = (postId) => (
-    <Link to="/comments" onClick={() => setCommentSection(postId)}>
-      Comments
-    </Link>
-  );
 
   return (
     <AuthProvider>
@@ -52,16 +42,9 @@ export default function Routes() {
         {popUp.map((thing) => thing)}
 
         <Switch>
-          <Route exact path="/comments">
-            <Comments commentSection={commentSection} />
-          </Route>
+          <Route path="/comments/:id" component={Comments} />
           <Route exact path="/postform" component={PostForm} />
-          <Route exact path="/">
-            <App
-              setCommentSection={setCommentSection}
-              commentsLink={commentsLink}
-            />
-          </Route>
+          <Route exact path="/" component={App} />
           <Route exact path="/profile" component={Profile} />
         </Switch>
       </BrowserRouter>

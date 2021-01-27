@@ -33,11 +33,9 @@ body {
   display: block;
 }
 
-/* .loginOutButtonDiv {
-  position: absolute;
-  margin-right: 5%;
-} */
-
+.feedSelectorBar {
+  margin-left: 3%;
+}
 .loginPopUp {
   background-color: white;
   border-radius: 5px;
@@ -71,28 +69,14 @@ body {
   flex-wrap: wrap;
 }
 
-.feed {
-  width: 60%;
-  overflow: auto;
-  margin: auto;
-  padding: 5px;
-  background-color: yellow;
-  display: flex;
-  flex-direction: column;
-}
-
-.post {
-  margin: 3px;
-  padding: 3px;
-  background-color: red;
-}
-
 .topBanner {
   margin-bottom: 5px;
+  font-size: smaller;
 }
 
 .bottomBanner {
   margin-top: 5px;
+  font-size: smaller;
 }
 
 .topBanner b,
@@ -148,12 +132,6 @@ img {
 #newPostSubmit {
   min-width: 10vw;
 }
-/* 
-.commentPage {
-  background-color: rgba(119, 240, 212, 0.54);
-  height: 100%;
-  padding-top: 5px;
-} */
 
 .commentForm {
   margin: 5px auto 5px auto;
@@ -181,7 +159,8 @@ img {
 }
 
 .commentPageContainer,
-.profilePageContainer {
+.profilePageContainer,
+.feed {
   background-color: lightgreen;
   border-radius: 5px;
   /* box-shadow: 6px 6px 0px 4px rgba(0, 0, 255, 0.2); */
@@ -198,7 +177,8 @@ img {
 .comment,
 .commentPostContent,
 .profileMain,
-.profileBar {
+.profileBar,
+.post {
   background-color: rgb(37, 189, 61);
   border-radius: 5px;
   border: solid 2px #2d3128;

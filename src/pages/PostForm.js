@@ -41,7 +41,6 @@ export default function PostForm() {
     setGroup('');
   }
 
-  // something not working here
   async function handleSubmit(newPost) {
     const checkNewGroupName = feedsListData.includes(group);
     if (!checkNewGroupName) addGroup({ title: group });
@@ -53,7 +52,7 @@ export default function PostForm() {
     setContentType('');
   }
 
-  console.log(feedsListData, group, title, content, contentType);
+  // console.log(feedsListData, group, title, content, contentType);
   return (
     <div className="postFormPage">
       <div className="postForm" data-testid="PostForm">
@@ -69,6 +68,7 @@ export default function PostForm() {
             {newGroupPopUp ? '' : feedOptions}
           </select>
         </label>
+
         <div className="newGroupFormDiv">
           Or add new group{' '}
           <button type="button" id="newGroupButton" onClick={handlePopUp}>

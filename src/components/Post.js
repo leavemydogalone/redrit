@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 // import TopBanner from './TopBanner';
 
 export default function Post({ post, commentsLink }) {
@@ -23,7 +24,10 @@ export default function Post({ post, commentsLink }) {
       <div className="postBody" data-testid="PostBody">
         {postBody}
       </div>
-      <div className="bottomBanner">{commentsLink(post.id)}</div>
+      {/* <div className="bottomBanner">{commentsLink(post.id)}</div> */}
+      <div className="bottomBanner">
+        <Link to={`/comments/${post.id}`}>Comments</Link>
+      </div>
     </div>
   );
 }

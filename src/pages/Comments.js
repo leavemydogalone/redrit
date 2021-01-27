@@ -6,9 +6,9 @@ import Comment from '../components/Comment';
 import { addComment } from '../methods/firebaseMethods';
 import { nest } from '../methods/commentMethods';
 
-export default function Comments({ commentSection }) {
+export default function Comments({ match }) {
   // const postRef = '5117175d-4f70-4e3d-8f96-3e8b10201afd';
-
+  // const postRef = '3b507108-cd52-45cc-bfc3-03f1e2923cfa';
   const { currentUser } = useContext(AuthContext);
 
   const [postData, setPostData] = useState({});
@@ -20,14 +20,13 @@ export default function Comments({ commentSection }) {
   const [selected, setSelected] = useState(false);
 
   // all firebase references
-  const docRef = firebase.firestore().collection('posts').doc(commentSection);
+  const docRef = firebase.firestore().collection('posts').doc(match.params.id);
   const postCommentsRef = docRef.collection('comments');
 
   // a single get of post data
   function getPostData() {
     docRef.onSnapshot((doc) => {
       setPostData(doc.data());
-      setLoading(false);
     });
   }
 
@@ -55,6 +54,12 @@ export default function Comments({ commentSection }) {
   useEffect(() => {
     getPostData();
     getCommentsData();
+    setLoading(false);
+
+    return () => {
+      getCommentsData();
+      getPostData();
+    };
   }, []);
 
   // creates a nested array to easily .map through for rendering
