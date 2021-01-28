@@ -22,7 +22,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(119, 240, 212, 0.54);
+  /* background-color: rgba(119, 240, 212, 0.54); */
 }
 
 /* :not(:required) hides these rules from IE9 and below */

@@ -1,14 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
 import Comment from '../components/Comment';
 import { addComment } from '../methods/firebaseMethods';
 import { nest } from '../methods/commentMethods';
 
-export default function Comments({ match }) {
-  // const postRef = '5117175d-4f70-4e3d-8f96-3e8b10201afd';
-  // const postRef = '3b507108-cd52-45cc-bfc3-03f1e2923cfa';
+function Comments({ match, handleSuccessPopUp }) {
   const { currentUser } = useContext(AuthContext);
 
   const [postData, setPostData] = useState({});
@@ -41,21 +40,13 @@ export default function Comments({ match }) {
     });
   }
 
-  // adds the comment to firestore and resets the placeHolder text
-  function handleSubmit(newComment) {
-    if (newCommentText === '') return;
-    const commentClone = { ...newComment };
-    setNewCommentText('');
-
-    addComment(postCommentsRef, commentClone);
-  }
-
   // starts subscription on load. May need to cancel them when the page is changed
   useEffect(() => {
     getPostData();
     getCommentsData();
     setLoading(false);
 
+    console.log(handleSuccessPopUp);
     return () => {
       getCommentsData();
       getPostData();
@@ -71,6 +62,16 @@ export default function Comments({ match }) {
       setLoading(false);
     }
   }, [commentsData]);
+
+  // adds the comment to firestore and resets the placeHolder text
+  function handleSubmit(newComment) {
+    if (newCommentText === '') return;
+    const commentClone = { ...newComment };
+    setNewCommentText('');
+
+    addComment(postCommentsRef, commentClone);
+    handleSuccessPopUp('Comment added successfully!');
+  }
 
   // should add in another stand in text should the gets/subscriptions fail
   if (loading) {
@@ -131,3 +132,5 @@ export default function Comments({ match }) {
     </div>
   );
 }
+
+export default withRouter(Comments);

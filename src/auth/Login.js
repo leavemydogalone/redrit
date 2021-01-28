@@ -63,7 +63,7 @@ export default function Login({ setPopUp }) {
   };
 
   return (
-    <div className="loginPopUp">
+    <div className="popUp">
       <div className="xButton">
         <button type="button" onClick={() => setPopUp([])}>
           X

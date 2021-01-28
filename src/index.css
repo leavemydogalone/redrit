@@ -10,16 +10,18 @@ body {
 
 .App,
 .commentPage,
-.profilePage {
-  background-color: rgba(230, 228, 228, 0.48);
+.profilePage,
+.postFormPage {
+  background-color: rgba(0, 0, 0, 0.69);
   min-height: 100%;
   padding-top: 5px;
+  color: rgb(235, 235, 235);
 }
 
 .topBar {
   height: 10vh;
   display: flex;
-  background-color: #25bd3d;
+  background-color: #2fa42f;
   border-bottom: ridge 2px;
   top: 0px;
 }
@@ -31,14 +33,25 @@ body {
 .topBar li {
   margin-right: 20px;
   display: block;
+  background-color: rgb(0, 100, 16);
+  border-radius: 5px;
+  border: solid 2px #2d3128;
+  padding: 2px;
+  height: fit-content;
+}
+
+:link,
+:visited,
+:active {
   text-decoration: none;
+  color: white;
 }
 
 .feedSelectorBar {
   margin-left: 3%;
 }
 
-.loginPopUp {
+.popUp {
   background-color: white;
   border-radius: 5px;
   border: ridge blue 2px;
@@ -106,12 +119,12 @@ img {
   max-width: 30%;
 }
 
-.postFormPage {
+/* .postFormPage {
   height: 100%;
   width: 100%;
   background-color: rgba(0, 0, 255, 0.247);
   padding-top: 5vh;
-}
+} */
 
 .postForm {
   display: flex;
@@ -167,8 +180,10 @@ img {
 
 .commentPageContainer,
 .profilePageContainer,
-.feed {
-  background-color: lightgreen;
+.feed,
+.feedSelectorBar,
+.postForm {
+  background-color: #2fa42f;
   border-radius: 5px;
   /* box-shadow: 6px 6px 0px 4px rgba(0, 0, 255, 0.2); */
   max-width: 50vw;
@@ -186,7 +201,7 @@ img {
 .profileMain,
 .profileBar,
 .post {
-  background-color: rgb(37, 189, 61);
+  background-color: rgb(0, 100, 16);
   border-radius: 5px;
   border: solid 2px #2d3128;
   margin: 2px;

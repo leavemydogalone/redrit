@@ -1,4 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import firebase from '../firebase';
 import { addPost, addGroup } from '../methods/firebaseMethods';
@@ -14,8 +15,10 @@ export default function PostForm() {
   const [contentType, setContentType] = useState('text');
   const [newGroupPopUp, setNewGroupPopUp] = useState(false);
 
+  // firebase reference for groups
   const groupsRef = firebase.firestore().collection('groups');
 
+  // one time get of groups
   function getFeedsList() {
     groupsRef.get().then((querySnapshot) => {
       const items = [];
@@ -26,21 +29,32 @@ export default function PostForm() {
     });
   }
 
+  // gets groups on mount
   useEffect(() => {
     getFeedsList();
   }, []);
 
+  // maps the array of groups into options for the select drop menu
   const feedOptions = feedsListData.map((feed) => (
     <option value={feed} key={feed}>
       {feed}
     </option>
   ));
 
+  // will either add or remove the new group form popup on click and removes the previous group choice from the state
   function handlePopUp() {
     setNewGroupPopUp(!newGroupPopUp);
     setGroup('');
   }
 
+  const history = useHistory();
+  const returnToFeeds = () => {
+    const path = `/`;
+    history.push(path);
+  };
+
+  // if the new group does not exist in the database, it will add the group to the groupsref
+  // then adds the post to the post collection and resets states
   async function handleSubmit(newPost) {
     const checkNewGroupName = feedsListData.includes(group);
     if (!checkNewGroupName) addGroup({ title: group });
@@ -50,6 +64,9 @@ export default function PostForm() {
     setGroup('');
     setContent('');
     setContentType('');
+
+    // post submitted pop up
+    returnToFeeds();
   }
 
   // console.log(feedsListData, group, title, content, contentType);

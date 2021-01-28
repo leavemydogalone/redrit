@@ -7,17 +7,24 @@ import Comments from './pages/Comments';
 import PostForm from './pages/PostForm';
 import LoginOutButton from './components/LoginOutButton';
 import Login from './auth/Login';
+import SuccessPopUp from './components/SuccessPopUp';
 
 export default function Routes() {
   // should probably have the sign out button return user to default home page
   // cuz otherwise they may be on the profile page or someones followed list
   const [popUp, setPopUp] = useState([]);
-  const handlePopUp = () => {
+  const handleLoginPopUp = () => {
     if (!popUp[0]) {
       setPopUp([<Login setPopUp={setPopUp} />]);
     } else {
       setPopUp([]);
     }
+  };
+
+  const handleSuccessPopUp = (text) => {
+    setPopUp([<SuccessPopUp text={text} />]);
+    console.log(text);
+    const popUpTimeOut = setTimeout(() => setPopUp([]), 2000);
   };
 
   return (
@@ -26,7 +33,7 @@ export default function Routes() {
         <div className="topBar">
           <ul>
             <li>
-              <Link to="/">All</Link>
+              <Link to="/">Feeds</Link>
             </li>
             <li>
               <Link to="/profile">Profile</Link>
@@ -35,14 +42,22 @@ export default function Routes() {
               <Link to="/postform">Make a post!</Link>
             </li>
             <li>
-              <LoginOutButton handlePopUp={handlePopUp} />
+              <LoginOutButton handleLoginPopUp={handleLoginPopUp} />
             </li>
           </ul>
         </div>
         {popUp.map((thing) => thing)}
 
         <Switch>
-          <Route path="/comments/:id" component={Comments} />
+          <Route
+            path="/comments/:id"
+
+            // eslint-disable-next-line react/jsx-props-no-spreading
+          >
+            <Comments handleSuccessPopUp={handleSuccessPopUp} />;
+          </Route>
+
+          {/* must add props and the withrouter to postForm as well */}
           <Route exact path="/postform" component={PostForm} />
           <Route exact path="/" component={App} />
           <Route exact path="/profile" component={Profile} />

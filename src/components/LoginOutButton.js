@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
 
-export default function SignUpInOutButton({ handlePopUp }) {
+export default function SignUpInOutButton({ handleLoginPopUp }) {
   const { currentUser } = useContext(AuthContext);
 
   const logOut = () => {
@@ -10,7 +10,8 @@ export default function SignUpInOutButton({ handlePopUp }) {
   };
 
   useEffect(() => {
-    if (currentUser && document.querySelector('.loginPopUp')) handlePopUp();
+    if (currentUser && document.querySelector('.loginPopUp'))
+      handleLoginPopUp();
   }, [currentUser]);
 
   // keep track of if it is signed in and get rid of pop up if signed in
@@ -19,7 +20,7 @@ export default function SignUpInOutButton({ handlePopUp }) {
       Sign out
     </button>
   ) : (
-    <button type="button" onClick={handlePopUp}>
+    <button type="button" onClick={handleLoginPopUp}>
       Sign up/Sign In
     </button>
   );
