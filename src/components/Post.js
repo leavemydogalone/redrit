@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import VoteArrow from './VoteArrow';
 // import TopBanner from './TopBanner';
 
 export default function Post({ post, commentsLink }) {
@@ -26,6 +27,9 @@ export default function Post({ post, commentsLink }) {
       </div>
       {/* <div className="bottomBanner">{commentsLink(post.id)}</div> */}
       <div className="bottomBanner">
+        <VoteArrow direction="up" />
+        {post.votes}
+        <VoteArrow direction="down" />
         <Link to={`/comments/${post.id}`}>Comments</Link>
       </div>
     </div>

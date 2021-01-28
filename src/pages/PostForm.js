@@ -1,12 +1,12 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, withRouter } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import firebase from '../firebase';
 import { addPost, addGroup } from '../methods/firebaseMethods';
 import { AuthContext } from '../auth/Auth';
 import NewGroupForm from '../components/NewGroupForm';
 
-export default function PostForm() {
+function PostForm({ handleSuccessPopUp }) {
   const { currentUser } = useContext(AuthContext);
   const [feedsListData, setFeedsListData] = useState([]);
   const [title, setTitle] = useState('');
@@ -47,6 +47,7 @@ export default function PostForm() {
     setGroup('');
   }
 
+  // function to return user to feeds
   const history = useHistory();
   const returnToFeeds = () => {
     const path = `/`;
@@ -55,17 +56,19 @@ export default function PostForm() {
 
   // if the new group does not exist in the database, it will add the group to the groupsref
   // then adds the post to the post collection and resets states
+  // then it will make the successful post popup and return user to feeds
   async function handleSubmit(newPost) {
     const checkNewGroupName = feedsListData.includes(group);
     if (!checkNewGroupName) addGroup({ title: group });
 
-    addPost(newPost);
+    await addPost(newPost);
+
     setTitle('');
     setGroup('');
     setContent('');
     setContentType('');
 
-    // post submitted pop up
+    await handleSuccessPopUp('Post added successfully!');
     returnToFeeds();
   }
 
@@ -160,3 +163,4 @@ export default function PostForm() {
     </div>
   );
 }
+export default withRouter(PostForm);

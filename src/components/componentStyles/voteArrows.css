@@ -1,0 +1,49 @@
+.icono-arrow1-up,
+.icono-arrow1-down {
+  color: #888 !important;
+}
+.icono-arrow1-up:hover,
+.icono-arrow1-down:hover {
+  color: #aaa !important;
+}
+
+.icono-arrow1-down:after,
+.icono-arrow1-up:after,
+.icono-arrow1-down:before,
+.icono-arrow1-up:before {
+  content: '';
+  box-sizing: border-box;
+}
+
+.icono-arrow1-up,
+.icono-arrow1-down {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  color: #666;
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  border-width: 4px 4px 0 0;
+  border-style: solid;
+  margin: 10px;
+}
+
+.icono-arrow1-up:before,
+.icono-arrow1-down:before {
+  right: 0;
+  top: -3px;
+  position: absolute;
+  height: 4px;
+  box-shadow: inset 0 0 0 32px;
+  transform: rotate(-45deg);
+  width: 10px;
+  transform-origin: right top;
+}
+
+.icono-arrow1-up {
+  transform: rotate(-45deg);
+}
+.icono-arrow1-down {
+  transform: rotate(135deg);
+}

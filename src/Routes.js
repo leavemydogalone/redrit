@@ -49,16 +49,14 @@ export default function Routes() {
         {popUp.map((thing) => thing)}
 
         <Switch>
-          <Route
-            path="/comments/:id"
-
-            // eslint-disable-next-line react/jsx-props-no-spreading
-          >
+          <Route path="/comments/:id">
             <Comments handleSuccessPopUp={handleSuccessPopUp} />;
           </Route>
 
           {/* must add props and the withrouter to postForm as well */}
-          <Route exact path="/postform" component={PostForm} />
+          <Route exact path="/postform">
+            <PostForm handleSuccessPopUp={handleSuccessPopUp} />
+          </Route>
           <Route exact path="/" component={App} />
           <Route exact path="/profile" component={Profile} />
         </Switch>
