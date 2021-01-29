@@ -85,6 +85,57 @@ service cloud.firestore {
         request.resource.data.keys().hasOnly(allFields)
       }
     }
+    match /users/{itemId} {
+      match /upVotes/{itemId} {
+        
+        allow read: if isSignedIn();
+          
+
+        allow create: if isValidVote(request.resource.data) &&
+          isOwner(request.resource.data) &&
+          isSignedIn() &&
+          checkKeys();
+
+        allow update: if isValidVote(request.resource.data) &&
+          isOwner(request.resource.data) &&
+          isOwner(resource.data) &&
+          isSignedIn() &&
+          checkKeys();
+
+        allow delete: if isOwner(resource.data) &&
+          isSignedIn();
+
+        // FUNCTIONS
+      
+    
+        function isOwner(vote) {
+          return request.auth.uid == vote.uid;
+        }
+    
+        function isValidVote(vote) {
+          return (
+            // vote.type
+            vote.type is string &&
+            vote.type != '' &&
+            // vote.id
+            vote.id is string &&
+            vote.id != '' &&
+            // vote.uid
+            vote.uid is string &&
+            vote.uid != '' 
+          );
+        }
+
+        function checkKeys() {
+          let requiredFields = ['type','id', 'uid'];
+          let optionalFields = [];
+          let allFields = requiredFields.concat(optionalFields);
+          return request.resource.data.keys().hasAll(requiredFields) &&
+          request.resource.data.keys().hasOnly(allFields)
+        }
+      }
+    }
+
     match /posts/{itemId} {
 
       allow read: if true;

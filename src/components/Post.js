@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import VoteArrow from './VoteArrow';
 // import TopBanner from './TopBanner';
 
-export default function Post({ post, commentsLink }) {
+export default function Post({ post }) {
   const postBody =
     post.contentType === 'text' ? (
       post.content

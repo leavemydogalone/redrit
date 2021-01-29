@@ -51,3 +51,46 @@ export function addGroup(newGroup) {
       alert('Could not add new group');
     });
 }
+
+export function getUserVotes(uid, setUserVotes, type) {
+  usersRef
+    .doc(uid)
+    .collection('upVotes')
+    .where('type', '==', type)
+    .onSnapshot((querySnapShot) => {
+      const items = [];
+      querySnapShot.forEach((doc) => {
+        items.push(doc.data());
+      });
+      setUserVotes(items);
+    });
+}
+
+export function getPosts(setLoading, setPosts, feed) {
+  function allOrOneFeed() {
+    if (feed === 'all') return postsRef;
+    return postsRef.where('group', '==', feed);
+  }
+  setLoading(true);
+  allOrOneFeed()
+    .get()
+    .then((querySnapshot) => {
+      const items = [];
+      querySnapshot.forEach((doc) => {
+        items.push(doc.data());
+      });
+      setPosts(items);
+      setLoading(false);
+    })
+    .catch((err) => console.log(err));
+}
+
+export function getFeeds(setFeedsData) {
+  groupsRef.get().then((querySnapshot) => {
+    const items = [];
+    querySnapshot.forEach((doc) => {
+      items.push(doc.data().title);
+    });
+    setFeedsData(items);
+  });
+}

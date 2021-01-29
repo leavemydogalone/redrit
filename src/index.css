@@ -6,6 +6,8 @@ body {
 
 #root {
   height: 100%;
+  font-weight: bold;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .App,
@@ -84,7 +86,7 @@ body {
 }
 
 .postBody {
-  background-color: #90ee9082;
+  background-color: #08510882;
   padding: 4px;
   border-radius: 2px;
 }
@@ -200,9 +202,9 @@ img {
 .profileMain,
 .profileBar,
 .post {
-  background-color: rgb(0, 100, 16);
+  background-color: rgba(0, 100, 16, 0.27);
   border-radius: 5px;
-  border: solid 2px #2d3128;
+  border: solid 1px #2d31287d;
   margin: 2px;
   display: block;
   padding: 15px;
