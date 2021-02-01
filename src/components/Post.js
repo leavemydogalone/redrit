@@ -38,8 +38,7 @@ export default function Post({ post, userPostVotes, setFeed }) {
       <div className="topBanner" data-testid="TopBanner">
         <b>{post.group}</b>
         <div className="username">
-          u/
-          {post.user}
+          posted by u/{post.user} {post.createdAt.toDate().toDateString()}
         </div>
       </div>
       <b>{post.title}</b>

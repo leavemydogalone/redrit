@@ -56,6 +56,7 @@ export default function Login({ setPopUp }) {
       .signInWithEmailAndPassword(email, password)
       .then(() => {
         resetInput();
+        setPopUp([]);
       })
       .catch((err) => {
         console.error(err);

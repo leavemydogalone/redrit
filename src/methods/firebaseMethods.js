@@ -73,6 +73,7 @@ export function getPosts(setLoading, setPosts, feed) {
   }
   setLoading(true);
   allOrOneFeed()
+    .orderBy('createdAt', 'desc')
     .get()
     .then((querySnapshot) => {
       const items = [];
@@ -96,6 +97,11 @@ export function getFeeds(setFeedsData) {
 }
 
 export function addVote(uid, id, voteObj) {
+  // need to make it get from the upvotes collection
+  // need to transfer the rules to the new votes collection
+  // doesnt work because want to have them all in one place so
+  // that they can be accessed by the posts
+  function upOrDown(direction) {}
   usersRef
     .doc(uid)
     .collection('upVotes')

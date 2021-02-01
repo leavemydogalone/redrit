@@ -12,6 +12,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [userPostVotes, setUserPostVotes] = useState([]);
   const [loading, setLoading] = useState(false);
+  // const [page, setPage] = useState(0);
 
   // one time get of a list of different groups/feeds
   useEffect(() => {
@@ -20,7 +21,7 @@ function App() {
 
   useEffect(() => {
     getPosts(setLoading, setPosts, feed);
-  }, [feed]);
+  }, [feed, currentUser]);
 
   // subscription to current users upvotes for posts
   useEffect(() => {
@@ -32,14 +33,15 @@ function App() {
   }, []);
 
   const feedOptions = feedsData.map((group) => (
-    <option value={group}>{group}</option>
+    <option value={group} key={group}>
+      {group}
+    </option>
   ));
 
   if (loading) {
     return <Spinner />;
   }
 
-  console.log('hi');
   return (
     <div className="App" data-testid="App">
       <div className="feedSelectorBar">
