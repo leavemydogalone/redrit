@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import VoteArrow from './VoteArrow';
+import { AuthContext } from '../auth/Auth';
+
 // import TopBanner from './TopBanner';
 
 export default function Post({ post, userPostVotes, setFeed }) {
   const [vote, setVote] = useState(false);
+  const { currentUser } = useContext(AuthContext);
 
   // will try to find the 'vote' object in the user's votes collection
   // and if it exists, will set the direction of the vote accordingly
@@ -48,14 +51,14 @@ export default function Post({ post, userPostVotes, setFeed }) {
       <div className="bottomBanner">
         <VoteArrow
           direction="up"
-          voted={vote === 'up'}
+          voted={currentUser && vote === 'up'}
           id={post.id}
           type="post"
         />
         {post.votes}
         <VoteArrow
           direction="down"
-          voted={vote === 'down'}
+          voted={currentUser && vote === 'down'}
           id={post.id}
           type="post"
         />

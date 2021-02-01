@@ -113,4 +113,5 @@ export function deleteVote(uid, id) {
     .doc(id)
     .delete()
     .catch((err) => console.log(err));
+  // might want to add a new key user with lastUpvote, downvote to slow it down
 }

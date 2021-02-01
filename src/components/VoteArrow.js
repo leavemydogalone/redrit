@@ -6,18 +6,19 @@ import { AuthContext } from '../auth/Auth';
 export default function VoteArrow({ direction, voted, id, type }) {
   const { currentUser } = useContext(AuthContext);
 
-  const voteObj = {
-    direction,
-    id,
-    uid: currentUser.uid,
-    type,
-  };
-
   function handleClick() {
-    if (voted) {
-      deleteVote(currentUser.uid, id);
-    } else {
-      addVote(currentUser.uid, id, voteObj);
+    if (currentUser) {
+      if (voted) {
+        deleteVote(currentUser.uid, id);
+      } else {
+        const voteObj = {
+          direction,
+          id,
+          uid: currentUser.uid,
+          type,
+        };
+        addVote(currentUser.uid, id, voteObj);
+      }
     }
   }
 
