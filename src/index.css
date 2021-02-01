@@ -39,7 +39,7 @@ body {
   border: solid 1px #2d31287d;
   height: fit-content;
   background-color: rgba(0, 100, 16, 0.27);
-  padding: 15px;
+  padding: 1vh;
 }
 
 .topBar li button {

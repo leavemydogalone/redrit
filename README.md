@@ -2,19 +2,8 @@ My version of the reddit website, created as part of the curriculum of The Odin 
 
 WIP
 
+redrit-75871.web.app
+
 View posts created by yourself and other users, saved to Firebase.
 
-
 updates to add:
-
-need to only allow updates on comments for those whose comment it is. (some new update settings in post). maybe:
-https://firebase.google.com/docs/firestore/security/rules-fields#allowing_only_certain_fields_to_be_changed
-
-allow update: if (request.resource.data.diff(resource.data).affectedKeys()
-.hasOnly(['name', 'location', 'city', 'address', 'hours', 'cuisine']));
-}
-
-maybe need to do some deep checking.
-
-comments section = query all docs who are have matching postId
-function
