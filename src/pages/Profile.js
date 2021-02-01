@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
 import Spinner from '../components/Spinner';
-import { getUserVotes } from '../methods/firebaseMethods';
 
 export default function Profile() {
   const [userData, setUserData] = useState({});
-  const [userPostVotes, setUserPostVotes] = useState([]);
+
   const [loading, setLoading] = useState(true);
   const { currentUser } = useContext(AuthContext);
 

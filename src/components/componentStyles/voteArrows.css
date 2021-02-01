@@ -1,10 +1,10 @@
 .icono-arrow1-up,
 .icono-arrow1-down {
-  color: rgb(255, 255, 255) !important;
+  color: rgb(255, 255, 255);
 }
 .icono-arrow1-up:hover,
 .icono-arrow1-down:hover {
-  color: #aaa !important;
+  color: #aaa;
 }
 
 .icono-arrow1-down:after,
@@ -20,7 +20,7 @@
   position: relative;
   display: inline-block;
   vertical-align: middle;
-  color: #666;
+  /* color: #666; */
   box-sizing: border-box;
   width: 10px;
   height: 10px;
@@ -46,4 +46,12 @@
 }
 .icono-arrow1-down {
   transform: rotate(135deg);
+}
+
+#voted {
+  color: yellow;
+}
+
+#voted:hover {
+  color: rgb(175, 175, 87);
 }

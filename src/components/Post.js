@@ -1,9 +1,24 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import VoteArrow from './VoteArrow';
 // import TopBanner from './TopBanner';
 
-export default function Post({ post }) {
+export default function Post({ post, userPostVotes, setFeed }) {
+  const [vote, setVote] = useState(false);
+
+  // will try to find the 'vote' object in the user's votes collection
+  // and if it exists, will set the direction of the vote accordingly
+  function determineVote() {
+    const votedPost = userPostVotes.find((x) => x.id === post.id);
+    const setDirection = votedPost && setVote(votedPost.direction);
+    console.log(vote, post.id);
+  }
+
+  // will determine if the post has been voted on everytime the user's upVotes collection changes
+  useEffect(() => {
+    determineVote();
+  }, [userPostVotes]);
+
   const postBody =
     post.contentType === 'text' ? (
       post.content
@@ -25,11 +40,21 @@ export default function Post({ post }) {
       <div className="postBody" data-testid="PostBody">
         {postBody}
       </div>
-      {/* <div className="bottomBanner">{commentsLink(post.id)}</div> */}
+
       <div className="bottomBanner">
-        <VoteArrow direction="up" />
+        <VoteArrow
+          direction="up"
+          voted={vote === 'up'}
+          id={post.id}
+          type="post"
+        />
         {post.votes}
-        <VoteArrow direction="down" />
+        <VoteArrow
+          direction="down"
+          voted={vote === 'down'}
+          id={post.id}
+          type="post"
+        />
         <Link to={`/comments/${post.id}`}>Comments</Link>
       </div>
     </div>

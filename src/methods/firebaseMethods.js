@@ -94,3 +94,12 @@ export function getFeeds(setFeedsData) {
     setFeedsData(items);
   });
 }
+
+export function addVote(uid, postId, voteObj) {
+  usersRef
+    .doc(uid)
+    .collection('upVotes')
+    .doc(postId)
+    .set(voteObj)
+    .catch((err) => console.log(err));
+}

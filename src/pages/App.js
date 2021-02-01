@@ -5,7 +5,7 @@ import { AuthContext } from '../auth/Auth';
 import Spinner from '../components/Spinner';
 import { getUserVotes, getPosts, getFeeds } from '../methods/firebaseMethods';
 
-function App({ commentsLink }) {
+function App() {
   const { currentUser } = useContext(AuthContext);
   const [feed, setFeed] = useState('all');
   const [feedsData, setFeedsData] = useState([]);
@@ -25,17 +25,12 @@ function App({ commentsLink }) {
   // subscription to current users upvotes for posts
   useEffect(() => {
     if (currentUser) getUserVotes(currentUser.uid, setUserPostVotes, 'post');
+    console.log(userPostVotes);
     return () => {
       getUserVotes(currentUser.uid, setUserPostVotes, 'post');
     };
   }, []);
 
-  // function determineUpvote (post){
-  //   if(userPostVotes[0]) {
-  //     // for in loop?
-  //     if (userPostVotes.includes(post.id))
-  //   }
-  // }
   const feedOptions = feedsData.map((group) => (
     <option value={group}>{group}</option>
   ));
@@ -44,6 +39,7 @@ function App({ commentsLink }) {
     return <Spinner />;
   }
 
+  console.log('hi');
   return (
     <div className="App" data-testid="App">
       <div className="feedSelectorBar">
@@ -62,11 +58,10 @@ function App({ commentsLink }) {
       <div className="feed">
         {posts.map((post) => (
           <Post
-            voted={7}
+            userPostVotes={userPostVotes}
             post={post}
             key={post.title}
             setFeed={setFeed}
-            commentsLink={commentsLink}
           />
         ))}
       </div>
