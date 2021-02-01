@@ -122,12 +122,14 @@ service cloud.firestore {
             vote.id != '' &&
             // vote.uid
             vote.uid is string &&
-            vote.uid != '' 
+            vote.uid != '' &&
+            vote.direction is string &&
+            vote.direction != '' 
           );
         }
 
         function checkKeys() {
-          let requiredFields = ['type','id', 'uid'];
+          let requiredFields = ['type','id', 'uid', 'direction'];
           let optionalFields = [];
           let allFields = requiredFields.concat(optionalFields);
           return request.resource.data.keys().hasAll(requiredFields) &&

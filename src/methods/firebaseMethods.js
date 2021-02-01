@@ -95,11 +95,21 @@ export function getFeeds(setFeedsData) {
   });
 }
 
-export function addVote(uid, postId, voteObj) {
+export function addVote(uid, id, voteObj) {
   usersRef
     .doc(uid)
     .collection('upVotes')
-    .doc(postId)
+    .doc(id)
     .set(voteObj)
+    .then(console.log(voteObj, id, uid))
+    .catch((err) => console.log(err));
+}
+
+export function deleteVote(uid, id) {
+  usersRef
+    .doc(uid)
+    .collection('upVotes')
+    .doc(id)
+    .delete()
     .catch((err) => console.log(err));
 }

@@ -8,13 +8,17 @@ export default function Post({ post, userPostVotes, setFeed }) {
 
   // will try to find the 'vote' object in the user's votes collection
   // and if it exists, will set the direction of the vote accordingly
+  // otherwise will set it to false (this is to remove the vote direction if
+  // it was previously set)
   function determineVote() {
     const votedPost = userPostVotes.find((x) => x.id === post.id);
-    const setDirection = votedPost && setVote(votedPost.direction);
-    console.log(vote, post.id);
+    const setDirection = votedPost
+      ? setVote(votedPost.direction)
+      : setVote(false);
   }
 
-  // will determine if the post has been voted on everytime the user's upVotes collection changes
+  // will determine if the post has been voted on everytime the user's upVotes
+  //  collection changes
   useEffect(() => {
     determineVote();
   }, [userPostVotes]);
