@@ -2,7 +2,7 @@ My version of the reddit website, created as part of the curriculum of The Odin 
 
 WIP
 
-redrit-75871.web.app
+[Redrit](https://redrit-75871.web.app/)
 
 View posts created by yourself and other users, saved to Firebase.
 
