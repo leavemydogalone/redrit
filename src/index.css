@@ -35,11 +35,21 @@ body {
 .topBar li {
   margin-right: 20px;
   display: block;
-  background-color: rgb(0, 100, 16);
   border-radius: 5px;
-  border: solid 2px #2d3128;
-  padding: 2px;
+  border: solid 1px #2d31287d;
   height: fit-content;
+  background-color: rgba(0, 100, 16, 0.27);
+  padding: 15px;
+}
+
+.topBar li button {
+  background: none;
+  color: white;
+  border: none;
+  padding: 0;
+  font: inherit;
+  cursor: pointer;
+  outline: inherit;
 }
 
 :link,

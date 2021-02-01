@@ -21,9 +21,9 @@ export default function VoteArrow({ direction, voted, id, type }) {
     }
   }
 
-  useEffect(() => {
-    console.log(voted);
-  }, [voted]);
+  //   useEffect(() => {
+  //     console.log(voted);
+  //   }, [voted]);
   const arrow =
     direction === 'up' ? (
       <i

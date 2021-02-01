@@ -103,6 +103,7 @@ export function addVote(uid, id, voteObj) {
     .set(voteObj)
     .then(console.log(voteObj, id, uid))
     .catch((err) => console.log(err));
+  // need to update the post/comments votes as well
 }
 
 export function deleteVote(uid, id) {
