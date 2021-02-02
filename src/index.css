@@ -5,7 +5,7 @@ body {
 }
 
 #root {
-  height: 100%;
+  min-height: 100%;
   font-weight: bold;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -14,7 +14,7 @@ body {
 .commentPage,
 .profilePage,
 .postFormPage {
-  background-color: rgba(0, 0, 0, 0.69);
+  /* background-color: rgba(0, 0, 0, 0.69); */
   min-height: 100%;
   padding-top: 5px;
   color: rgb(235, 235, 235);

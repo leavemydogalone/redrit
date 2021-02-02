@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 import { AuthProvider } from './auth/Auth';
 import App from './pages/App';
@@ -8,11 +8,22 @@ import PostForm from './pages/PostForm';
 import LoginOutButton from './components/LoginOutButton';
 import Login from './auth/Login';
 import SuccessPopUp from './components/SuccessPopUp';
+import { getBackground } from './methods/firebaseMethods';
 
 export default function Routes() {
   // should probably have the sign out button return user to default home page
   // cuz otherwise they may be on the profile page or someones followed list
+  const [backgroundUrl, setBackgroundUrl] = useState();
   const [popUp, setPopUp] = useState([]);
+
+  useEffect(() => {
+    getBackground(setBackgroundUrl);
+  }, []);
+
+  useEffect(() => {
+    document.querySelector('#root').style.background = `url(${backgroundUrl})`;
+  }, [backgroundUrl]);
+
   const handleLoginPopUp = () => {
     if (!popUp[0]) {
       setPopUp([<Login setPopUp={setPopUp} />]);

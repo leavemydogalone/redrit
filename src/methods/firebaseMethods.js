@@ -1,12 +1,22 @@
 import firebase from '../firebase';
 
+const backgroundRef = firebase.storage().ref('prism.png');
 const postsRef = firebase.firestore().collection('posts');
 const commentsRef = firebase.firestore().collection('comments');
 const usersRef = firebase.firestore().collection('users');
 const groupsRef = firebase.firestore().collection('groups');
 
 // must add the doc to the person's profile as well for posts and comments
-
+export function getBackground(setBackgroundUrl) {
+  backgroundRef
+    .getDownloadURL()
+    .then((url) => {
+      setBackgroundUrl(url);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
 export function addPost(newPost) {
   postsRef
     .doc(newPost.id)
