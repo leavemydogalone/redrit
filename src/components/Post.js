@@ -5,26 +5,38 @@ import { AuthContext } from '../auth/Auth';
 
 // import TopBanner from './TopBanner';
 
-export default function Post({ post, userPostVotes, setFeed }) {
-  const [vote, setVote] = useState(false);
+export default function Post({ post, postVotes, setFeed }) {
+  const [votes, setVotes] = useState([]);
+  const [userVote, setUserVote] = useState();
   const { currentUser } = useContext(AuthContext);
 
-  // will try to find the 'vote' object in the user's votes collection
-  // and if it exists, will set the direction of the vote accordingly
-  // otherwise will set it to false (this is to remove the vote direction if
-  // it was previously set)
-  function determineVote() {
-    const votedPost = userPostVotes.find((x) => x.id === post.id);
-    const setDirection = votedPost
-      ? setVote(votedPost.direction)
-      : setVote(false);
+  // finds and sets the votes for this particular post
+  function determinePostVotes() {
+    const thisPostVotes = postVotes.filter((x) => x.parentId === post.id);
+    setVotes(thisPostVotes);
   }
 
-  // will determine if the post has been voted on everytime the user's upVotes
-  //  collection changes
+  // determines if the current user has voted for the post and sets
+  // the vote direction
+  function determineUserVote() {
+    if (currentUser) {
+      const userVotedPost =
+        votes[0] && votes.find((x) => x.uid === currentUser.uid);
+
+      const setVote = userVotedPost
+        ? setUserVote(userVotedPost)
+        : setUserVote(false);
+    }
+  }
+
+  // determines if the post votes change every time the postVotes subscription changes
   useEffect(() => {
-    determineVote();
-  }, [userPostVotes]);
+    determinePostVotes();
+  }, [postVotes]);
+
+  useEffect(() => {
+    determineUserVote();
+  }, [votes]);
 
   const postBody =
     post.contentType === 'text' ? (
@@ -50,15 +62,15 @@ export default function Post({ post, userPostVotes, setFeed }) {
       <div className="bottomBanner">
         <VoteArrow
           direction="up"
-          voted={currentUser && vote === 'up'}
-          id={post.id}
+          userVote={userVote}
+          parentId={post.id}
           type="post"
         />
-        {post.votes}
+        {votes.length}
         <VoteArrow
           direction="down"
-          voted={currentUser && vote === 'down'}
-          id={post.id}
+          userVote={userVote}
+          parentId={post.id}
           type="post"
         />
         <Link to={`/comments/${post.id}`}>Comments</Link>

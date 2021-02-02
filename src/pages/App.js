@@ -3,14 +3,14 @@ import Post from '../components/Post';
 import { AuthContext } from '../auth/Auth';
 
 import Spinner from '../components/Spinner';
-import { getUserVotes, getPosts, getFeeds } from '../methods/firebaseMethods';
+import { getVotes, getPosts, getFeeds } from '../methods/firebaseMethods';
 
 function App() {
   const { currentUser } = useContext(AuthContext);
   const [feed, setFeed] = useState('all');
   const [feedsData, setFeedsData] = useState([]);
   const [posts, setPosts] = useState([]);
-  const [userPostVotes, setUserPostVotes] = useState([]);
+  const [postVotes, setPostVotes] = useState([]);
   const [loading, setLoading] = useState(false);
   // const [page, setPage] = useState(0);
 
@@ -23,12 +23,15 @@ function App() {
     getPosts(setLoading, setPosts, feed);
   }, [feed, currentUser]);
 
-  // subscription to current users upvotes for posts
+  // subscription to all post votes. Would probably be better as a one time
+  // get so that they dont need to subscribe to all vote updates
+  // but since the app will likely not recieve much traffic, having a user
+  // be subscribed to all votes won't affect their performance too negatively
+
   useEffect(() => {
-    if (currentUser) getUserVotes(currentUser.uid, setUserPostVotes, 'post');
-    console.log(userPostVotes);
+    getVotes(setPostVotes, 'post');
     return () => {
-      getUserVotes(currentUser.uid, setUserPostVotes, 'post');
+      getVotes(setPostVotes, 'post');
     };
   }, []);
 
@@ -60,7 +63,7 @@ function App() {
       <div className="feed">
         {posts.map((post) => (
           <Post
-            userPostVotes={userPostVotes}
+            postVotes={postVotes}
             post={post}
             key={post.title}
             setFeed={setFeed}

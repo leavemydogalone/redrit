@@ -5,6 +5,7 @@ const postsRef = firebase.firestore().collection('posts');
 const commentsRef = firebase.firestore().collection('comments');
 const usersRef = firebase.firestore().collection('users');
 const groupsRef = firebase.firestore().collection('groups');
+const votesRef = firebase.firestore().collection('votes');
 
 // must add the doc to the person's profile as well for posts and comments
 export function getBackground(setBackgroundUrl) {
@@ -62,18 +63,14 @@ export function addGroup(newGroup) {
     });
 }
 
-export function getUserVotes(uid, setUserVotes, type) {
-  usersRef
-    .doc(uid)
-    .collection('upVotes')
-    .where('type', '==', type)
-    .onSnapshot((querySnapShot) => {
-      const items = [];
-      querySnapShot.forEach((doc) => {
-        items.push(doc.data());
-      });
-      setUserVotes(items);
+export function getVotes(setVotes, type) {
+  votesRef.where('type', '==', type).onSnapshot((querySnapShot) => {
+    const items = [];
+    querySnapShot.forEach((doc) => {
+      items.push(doc.data());
     });
+    setVotes(items);
+  });
 }
 
 export function getPosts(setLoading, setPosts, feed) {
@@ -111,22 +108,18 @@ export function addVote(uid, id, voteObj) {
   // need to transfer the rules to the new votes collection
   // doesnt work because want to have them all in one place so
   // that they can be accessed by the posts
-  function upOrDown(direction) {}
-  usersRef
-    .doc(uid)
-    .collection('upVotes')
-    .doc(id)
+
+  votesRef
+    .doc(voteObj.voteId)
     .set(voteObj)
     .then(console.log(voteObj, id, uid))
     .catch((err) => console.log(err));
   // need to update the post/comments votes as well
 }
 
-export function deleteVote(uid, id) {
-  usersRef
-    .doc(uid)
-    .collection('upVotes')
-    .doc(id)
+export function deleteVote(voteId) {
+  votesRef
+    .doc(voteId)
     .delete()
     .catch((err) => console.log(err));
   // might want to add a new key user with lastUpvote, downvote to slow it down

@@ -1,35 +1,40 @@
 import React, { useContext, useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import './componentStyles/voteArrows.css';
 import { addVote, deleteVote } from '../methods/firebaseMethods';
 import { AuthContext } from '../auth/Auth';
 
-export default function VoteArrow({ direction, voted, id, type }) {
+export default function VoteArrow({ direction, userVote, parentId, type }) {
   const { currentUser } = useContext(AuthContext);
 
   function handleClick() {
     if (currentUser) {
-      if (voted) {
-        deleteVote(currentUser.uid, id);
+      if (userVote.direction === direction) {
+        deleteVote(userVote.voteId);
       } else {
         const voteObj = {
           direction,
-          id,
+          voteId: userVote.voteId || uuidv4(),
+          parentId,
           uid: currentUser.uid,
           type,
         };
-        addVote(currentUser.uid, id, voteObj);
+        addVote(currentUser.uid, parentId, voteObj);
       }
     }
   }
 
-  //   useEffect(() => {
-  //     console.log(voted);
-  //   }, [voted]);
+  function determineId() {
+    // console.log(userVote);
+    if (userVote && userVote.direction === direction) return 'voted';
+    return 'notVoted';
+  }
+
   const arrow =
     direction === 'up' ? (
       <i
         className="icono-arrow1-up"
-        id={voted ? 'voted' : 'notVoted'}
+        id={determineId('up')}
         role="button"
         aria-label="upvote"
         tabIndex="0"
@@ -39,7 +44,7 @@ export default function VoteArrow({ direction, voted, id, type }) {
     ) : (
       <i
         className="icono-arrow1-down"
-        id={voted ? 'voted' : 'notVoted'}
+        id={determineId(direction)}
         role="button"
         aria-label="upvote"
         tabIndex="0"
