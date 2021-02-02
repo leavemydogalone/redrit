@@ -9,9 +9,12 @@ export default function VoteArrow({ direction, userVote, parentId, type }) {
 
   function handleClick() {
     if (currentUser) {
+      // will delete vote if user clicks the upvote or downvote arrow a second time
       if (userVote.direction === direction) {
         deleteVote(userVote.voteId);
       } else {
+        // will either overwrite vote if their is one with same voteId or will create new
+        // vote document with id created by uuid
         const voteObj = {
           direction,
           voteId: userVote.voteId || uuidv4(),
