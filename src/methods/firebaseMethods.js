@@ -18,6 +18,7 @@ export function getBackground(setBackgroundUrl) {
       console.log(error);
     });
 }
+
 export function addPost(newPost) {
   postsRef
     .doc(newPost.id)
@@ -38,15 +39,15 @@ export function addComment(postCommentsRef, newComment) {
     });
 }
 
-export function checkDisplayName(displayName, setUserNameValidity) {
-  setUserNameValidity(true);
+export function getDisplayNames(setDisplayNameList) {
   usersRef
-    .where('displayName', '==', displayName)
     .get()
     .then((querySnapshot) => {
+      const items = [];
       querySnapshot.forEach((doc) => {
-        setUserNameValidity(false);
+        items.push(doc.data());
       });
+      setDisplayNameList(items);
     })
     .catch((error) => {
       console.log('Error getting documents: ', error);
@@ -61,16 +62,6 @@ export function addGroup(newGroup) {
       console.log(err);
       alert('Could not add new group');
     });
-}
-
-export function getVotes(setVotes, type) {
-  votesRef.where('type', '==', type).onSnapshot((querySnapShot) => {
-    const items = [];
-    querySnapShot.forEach((doc) => {
-      items.push(doc.data());
-    });
-    setVotes(items);
-  });
 }
 
 export function getPosts(setLoading, setPosts, feed) {
@@ -103,16 +94,20 @@ export function getFeeds(setFeedsData) {
   });
 }
 
-export function addVote(uid, id, voteObj) {
-  // need to make it get from the upvotes collection
-  // need to transfer the rules to the new votes collection
-  // doesnt work because want to have them all in one place so
-  // that they can be accessed by the posts
+export function getVotes(setVotes, type) {
+  votesRef.where('type', '==', type).onSnapshot((querySnapShot) => {
+    const items = [];
+    querySnapShot.forEach((doc) => {
+      items.push(doc.data());
+    });
+    setVotes(items);
+  });
+}
 
+export function addVote(uid, id, voteObj) {
   votesRef
     .doc(voteObj.voteId)
     .set(voteObj)
-    .then(console.log(voteObj, id, uid))
     .catch((err) => console.log(err));
   // need to update the post/comments votes as well
 }

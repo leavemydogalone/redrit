@@ -46,7 +46,6 @@ function Comments({ match, handleSuccessPopUp }) {
     getCommentsData();
     setLoading(false);
 
-    console.log(handleSuccessPopUp);
     return () => {
       getCommentsData();
       getPostData();
@@ -64,8 +63,20 @@ function Comments({ match, handleSuccessPopUp }) {
   }, [commentsData]);
 
   // adds the comment to firestore and resets the placeHolder text
-  function handleSubmit(newComment) {
-    if (newCommentText === '') return;
+  function handleSubmit() {
+    if (newCommentText === '' || !currentUser) return;
+
+    const newComment = {
+      content: newCommentText,
+      parentId: null,
+      id: uuidv4(),
+      user: currentUser.displayName,
+      uid: currentUser.uid,
+      votes: 1,
+      createdAt: firebase.firestore.Timestamp.now(),
+      lastUpdate: firebase.firestore.Timestamp.now(),
+      post: postData.id,
+    };
     const commentClone = { ...newComment };
     setNewCommentText('');
 
@@ -96,22 +107,7 @@ function Comments({ match, handleSuccessPopUp }) {
             onChange={(e) => setNewCommentText(e.target.value)}
           />
 
-          <button
-            type="button"
-            onClick={() =>
-              handleSubmit({
-                content: newCommentText,
-                parentId: null,
-                id: uuidv4(),
-                user: currentUser.displayName,
-                uid: currentUser.uid,
-                votes: 1,
-                createdAt: firebase.firestore.Timestamp.now(),
-                lastUpdate: firebase.firestore.Timestamp.now(),
-                post: postData.id,
-              })
-            }
-          >
+          <button type="button" onClick={() => handleSubmit()}>
             Submit
             <br />
             Comment

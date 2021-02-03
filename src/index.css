@@ -32,6 +32,13 @@ body {
   display: flex;
 }
 
+input {
+  height: 2em;
+  border: solid grey 1px;
+  border-radius: 3px;
+  margin: 2px;
+}
+
 .topBar li {
   margin-right: 20px;
   display: block;
@@ -63,9 +70,9 @@ body {
 }
 
 .popUp {
-  background-color: white;
+  background-color: #dceabd;
   border-radius: 5px;
-  border: ridge blue 2px;
+  border: ridge blue 1px;
   box-shadow: 6px 6px 0px 4px rgba(0, 0, 255, 0.2);
   padding: 15px;
   display: flex;
@@ -93,8 +100,14 @@ body {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  padding-bottom: 1em;
+  justify-content: space-around;
 }
 
+#popUpButtonRow button {
+  width: 30%;
+  padding: auto;
+}
 .postBody {
   background-color: #08510882;
   padding: 4px;
