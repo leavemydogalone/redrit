@@ -70,8 +70,8 @@ body {
   padding: 15px;
   display: flex;
   flex-direction: column;
-  height: 20vh;
-  width: 20vw;
+  min-height: 20vh;
+  min-width: 20vw;
   z-index: 999;
   position: absolute;
   top: 30%;

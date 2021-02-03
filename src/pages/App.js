@@ -65,7 +65,7 @@ function App() {
           <Post
             postVotes={postVotes}
             post={post}
-            key={post.title}
+            key={post.id}
             setFeed={setFeed}
           />
         ))}
