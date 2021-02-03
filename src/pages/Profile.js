@@ -9,10 +9,13 @@ export default function Profile() {
   const [loading, setLoading] = useState(true);
   const { currentUser } = useContext(AuthContext);
 
-  const userRef = firebase.firestore().collection('users').doc(currentUser.uid);
-
   // a single get of post data
   function getUserData() {
+    const userRef = firebase
+      .firestore()
+      .collection('users')
+      .doc(currentUser.uid);
+
     userRef.get().then((doc) => {
       setUserData(doc.data());
       setLoading(false);
