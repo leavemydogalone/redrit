@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
+import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
 import ChildCommentForm from './ChildCommentForm';
+import VoteArrow from './VoteArrow';
 
 export default function Comment({
   thisComment,
   setSelected,
   selected,
   postData,
+  votesData,
 }) {
-  // using array since .map can run on an empty array so I dont need to use any conditional code
-  // for when to render the form pop up
+  const { currentUser } = useContext(AuthContext);
+  const [votes, setVotes] = useState([]);
+  const [userVote, setUserVote] = useState();
+
   const [formPopUp, setFormPopUp] = useState([]);
 
   // logic to maintain only one child comment form at a time on page
@@ -32,9 +37,41 @@ export default function Comment({
     if (!selected) setFormPopUp([]);
   }, [selected]);
 
+  // finds and sets the votes for this particular comment
+  function determineCommentVotes() {
+    const thisPostVotes = votesData.filter(
+      (x) => x.parentId === thisComment.id
+    );
+    setVotes(thisPostVotes);
+  }
+
+  // determines if the current user has voted for the comment and sets
+  // the vote direction
+  function determineUserVote() {
+    if (currentUser) {
+      const userVotedPost =
+        votes[0] && votes.find((x) => x.uid === currentUser.uid);
+
+      const setVote = userVotedPost
+        ? setUserVote(userVotedPost)
+        : setUserVote(false);
+    }
+  }
+
+  // determines if the comment votes change every time the postVotes subscription changes
+  // again using a more specific query to watch for changes just to this post's comments would be better
+  useEffect(() => {
+    determineCommentVotes();
+  }, [votesData]);
+
+  useEffect(() => {
+    determineUserVote();
+  }, [votes]);
+
   const nestedComments = (thisComment.children || []).map((comment) => (
     <Comment
       key={comment.id}
+      votesData={votesData}
       thisComment={comment}
       selected={selected}
       setSelected={setSelected}
@@ -50,7 +87,19 @@ export default function Comment({
       </div>
       <div className="commentBody">{thisComment.content}</div>
       <div className="commentFooter">
-        <div>{thisComment.votes} upvotes</div>
+        <VoteArrow
+          direction="up"
+          userVote={userVote}
+          parentId={thisComment.id}
+          type="comment"
+        />
+        {votes.length}
+        <VoteArrow
+          direction="down"
+          userVote={userVote}
+          parentId={thisComment.id}
+          type="comment"
+        />
         <div
           role="button"
           tabIndex="0"
@@ -59,8 +108,6 @@ export default function Comment({
         >
           reply
         </div>
-        <div>report</div>
-        <br />
       </div>
       {formPopUp.map((child) => child)}
       {nestedComments}

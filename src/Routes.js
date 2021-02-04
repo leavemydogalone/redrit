@@ -64,7 +64,6 @@ export default function Routes() {
             <Comments handleSuccessPopUp={handleSuccessPopUp} />;
           </Route>
 
-          {/* must add props and the withrouter to postForm as well */}
           <Route exact path="/postform">
             <PostForm handleSuccessPopUp={handleSuccessPopUp} />
           </Route>

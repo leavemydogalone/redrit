@@ -49,7 +49,7 @@ export default function VoteArrow({ direction, userVote, parentId, type }) {
         className="icono-arrow1-down"
         id={determineId(direction)}
         role="button"
-        aria-label="upvote"
+        aria-label="downvote"
         tabIndex="0"
         onClick={() => handleClick()}
         onKeyDown={() => handleClick()}

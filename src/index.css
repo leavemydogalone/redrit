@@ -125,7 +125,8 @@ input {
 
 .topBanner b,
 .username,
-.postComments {
+.postComments,
+.commentFooter [role='button'] {
   cursor: pointer;
 }
 
@@ -239,15 +240,12 @@ img {
 
 .commentFooter {
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .commentFooter div {
   margin-right: 8px;
-  display: block;
-}
-
-.commentFooter [role='button']:hover {
-  cursor: pointer;
 }
 
 .comment textarea {

@@ -4,14 +4,20 @@ import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
 import Comment from '../components/Comment';
-import { addComment } from '../methods/firebaseMethods';
 import { nest } from '../methods/commentMethods';
+import {
+  addComment,
+  getVotes,
+  getPostData,
+  getCommentsData,
+} from '../methods/firebaseMethods';
 
 function Comments({ match, handleSuccessPopUp }) {
   const { currentUser } = useContext(AuthContext);
 
   const [postData, setPostData] = useState({});
   const [commentsData, setCommentsData] = useState([]);
+  const [votesData, setVotesData] = useState([]);
   const [nestedCommentsArray, setNestedCommentsArray] = useState([]);
   const [loading, setLoading] = useState(true);
   const [standInText, setStandInText] = useState('loading...');
@@ -23,32 +29,17 @@ function Comments({ match, handleSuccessPopUp }) {
   const postCommentsRef = docRef.collection('comments');
 
   // a single get of post data
-  function getPostData() {
-    docRef.onSnapshot((doc) => {
-      setPostData(doc.data());
-    });
-  }
 
-  // subscription to all comments of this post for real time updates
-  function getCommentsData() {
-    postCommentsRef.onSnapshot((querySnapShot) => {
-      const items = [];
-      querySnapShot.forEach((doc) => {
-        items.push(doc.data());
-      });
-      setCommentsData(items);
-    });
-  }
-
-  // starts subscription on load. May need to cancel them when the page is changed
+  // starts subscriptions on load. May need to cancel them when the page is changed
   useEffect(() => {
-    getPostData();
-    getCommentsData();
+    getPostData(docRef, setPostData);
+    getCommentsData(postCommentsRef, setCommentsData);
+    getVotes(setVotesData, 'comment');
     setLoading(false);
 
     return () => {
-      getCommentsData();
-      getPostData();
+      getCommentsData(postCommentsRef, setCommentsData);
+      getPostData(docRef, setPostData);
     };
   }, []);
 
@@ -84,6 +75,8 @@ function Comments({ match, handleSuccessPopUp }) {
     handleSuccessPopUp('Comment added successfully!');
   }
 
+  console.log(votesData);
+
   // should add in another stand in text should the gets/subscriptions fail
   if (loading) {
     return <h1>{standInText}</h1>;
@@ -116,6 +109,7 @@ function Comments({ match, handleSuccessPopUp }) {
         <div className="commentsList">
           {nestedCommentsArray.map((comment) => (
             <Comment
+              votesData={votesData}
               postData={postData}
               thisComment={comment}
               key={comment.id}
