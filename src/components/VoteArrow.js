@@ -13,8 +13,8 @@ export default function VoteArrow({ direction, userVote, parentId, type }) {
       if (userVote.direction === direction) {
         deleteVote(userVote.voteId);
       } else {
-        // will either overwrite vote if there is one with same voteId or will create new
-        // vote document with id created by uuid
+        // voteId will either overwrite vote if there is one with same voteId
+        // or will create new vote document with id created by uuid
         const voteObj = {
           direction,
           voteId: userVote.voteId || uuidv4(),

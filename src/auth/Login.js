@@ -67,7 +67,7 @@ export default function Login({ setPopUp }) {
         await firebase.auth().createUserWithEmailAndPassword(email, password);
         await firebase.auth().currentUser.updateProfile({
           displayName,
-          photoUrl:
+          photoURL:
             'https://pyxis.nymag.com/v1/imgs/e6c/02c/cbe672af6609198720b69efd475ab5f641-avatar-last-airbender.rsquare.w1200.jpg',
         });
         await userRef

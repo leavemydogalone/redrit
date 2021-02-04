@@ -10,4 +10,5 @@ updates to add:
 
 In the future would create more collections for votes where each post would have
 its own collection for upvotes in addition to the comments, so they would be easier
-to query, rather than just having one large collection of all votes
+to query, rather than just having one large collection of all votes.
+For profile list, could just have reference to the post/comment they made, do not need full copy of the object.

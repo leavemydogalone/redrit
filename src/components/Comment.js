@@ -93,6 +93,7 @@ export default function Comment({
           parentId={thisComment.id}
           type="comment"
         />
+        {/* this votes.length needs to be something else */}
         {votes.length}
         <VoteArrow
           direction="down"

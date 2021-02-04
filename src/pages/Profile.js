@@ -1,9 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react';
+import { withRouter } from 'react-router-dom';
 import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
 import Spinner from '../components/Spinner';
+import UpdatePopUp from '../components/UpdatePopUp';
 
-export default function Profile() {
+function Profile({ setPopUp }) {
   const [userData, setUserData] = useState({});
 
   const [loading, setLoading] = useState(true);
@@ -19,10 +21,19 @@ export default function Profile() {
     userRef.get().then((doc) => {
       setUserData(doc.data());
       setLoading(false);
-      console.log(doc.data());
+      // console.log(doc.data());1
     });
   }
 
+  function checkURL(url) {
+    return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
+  }
+
+  function updateImage() {
+    return true;
+  }
+
+  console.log(currentUser);
   useEffect(() => {
     if (currentUser) getUserData();
   }, []);
@@ -39,6 +50,17 @@ export default function Profile() {
     );
 
   if (loading) return <Spinner />;
+
+  const updateWordArray = ['username', 'password', 'email', 'avatar'];
+  const updateButtons = updateWordArray.map((thing) => (
+    <button
+      type="button"
+      className="updateButton"
+      onClick={() => setPopUp([<UpdatePopUp type={thing} />])}
+    >
+      {thing}
+    </button>
+  ));
 
   return (
     <div className="profilePage">
@@ -60,17 +82,16 @@ export default function Profile() {
         </div>
         <div className="profileBar" id="profileUpdate">
           <div>Update:</div>
-          <div>username</div>
-          <div>password</div>
-          <div>email</div>
+          {updateButtons}
         </div>
         <div className="profileBar" id="profilePostsAndComments">
           <div>
             Posts ({userData.posts}) : Comments ({userData.comments})
           </div>
-          <div>post upcroaks : comment upcroaks</div>
         </div>
       </div>
     </div>
   );
 }
+
+export default withRouter(Profile);

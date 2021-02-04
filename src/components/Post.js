@@ -66,6 +66,7 @@ export default function Post({ post, postVotes, setFeed }) {
           parentId={post.id}
           type="post"
         />
+        {/* this votes.length needs to be something else */}
         {votes.length}
         <VoteArrow
           direction="down"

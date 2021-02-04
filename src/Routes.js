@@ -68,7 +68,9 @@ export default function Routes() {
             <PostForm handleSuccessPopUp={handleSuccessPopUp} />
           </Route>
           <Route exact path="/" component={App} />
-          <Route exact path="/profile" component={Profile} />
+          <Route exact path="/profile">
+            <Profile setPopUp={setPopUp} />
+          </Route>
         </Switch>
       </BrowserRouter>
     </AuthProvider>
