@@ -75,8 +75,6 @@ function Comments({ match, handleSuccessPopUp }) {
     handleSuccessPopUp('Comment added successfully!');
   }
 
-  console.log(votesData);
-
   // should add in another stand in text should the gets/subscriptions fail
   if (loading) {
     return <h1>{standInText}</h1>;
