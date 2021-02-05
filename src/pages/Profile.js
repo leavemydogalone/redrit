@@ -25,14 +25,6 @@ function Profile({ setPopUp }) {
     });
   }
 
-  function checkURL(url) {
-    return url.match(/\.(jpeg|jpg|gif|png)$/) != null;
-  }
-
-  function updateImage() {
-    return true;
-  }
-
   console.log(currentUser);
   useEffect(() => {
     if (currentUser) getUserData();
@@ -51,12 +43,14 @@ function Profile({ setPopUp }) {
 
   if (loading) return <Spinner />;
 
-  const updateWordArray = ['username', 'password', 'email', 'avatar'];
+  const updateWordArray = ['displayName', 'password', 'email', 'avatar'];
   const updateButtons = updateWordArray.map((thing) => (
     <button
       type="button"
       className="updateButton"
-      onClick={() => setPopUp([<UpdatePopUp type={thing} />])}
+      onClick={() =>
+        setPopUp([<UpdatePopUp setPopUp={setPopUp} type={thing} />])
+      }
     >
       {thing}
     </button>

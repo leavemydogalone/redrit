@@ -56,7 +56,7 @@ export function addComment(postCommentsRef, newComment) {
     });
 }
 
-export function getDisplayNames(setDisplayNameList) {
+export function getAllUsersData(setAllUsersData) {
   usersRef
     .get()
     .then((querySnapshot) => {
@@ -64,7 +64,7 @@ export function getDisplayNames(setDisplayNameList) {
       querySnapshot.forEach((doc) => {
         items.push(doc.data());
       });
-      setDisplayNameList(items);
+      setAllUsersData(items);
     })
     .catch((error) => {
       console.log('Error getting documents: ', error);

@@ -67,7 +67,8 @@ export default function Post({ post, postVotes, setFeed }) {
           type="post"
         />
         {/* this votes.length needs to be something else */}
-        {votes.length}
+        {votes.filter((x) => x.direction === 'up').length -
+          votes.filter((x) => x.direction === 'down').length}
         <VoteArrow
           direction="down"
           userVote={userVote}

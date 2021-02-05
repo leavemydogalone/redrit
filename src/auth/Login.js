@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import firebase from '../firebase';
-import { getDisplayNames } from '../methods/firebaseMethods';
+import { getAllUsersData } from '../methods/firebaseMethods';
+// import {hasWhiteSpace, }
 
 export default function Login({ setPopUp }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [displayName, setDisplayName] = useState('');
-  const [displayNameList, setDisplayNameList] = useState([]);
+  const [usersData, setUsersData] = useState([]);
   const [displayNameValidity, setDisplayNameValidity] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -26,9 +27,9 @@ export default function Login({ setPopUp }) {
   });
 
   useEffect(() => {
-    getDisplayNames(setDisplayNameList);
+    getAllUsersData(setUsersData);
     return () => {
-      getDisplayNames(setDisplayNameList);
+      getAllUsersData(setUsersData);
     };
   }, []);
 
@@ -37,7 +38,7 @@ export default function Login({ setPopUp }) {
   }
 
   function checkDisplayNameValidity() {
-    const alreadyUsedDisplayName = displayNameList.find(
+    const alreadyUsedDisplayName = usersData.find(
       (x) => x.displayName === displayName
     );
     if (

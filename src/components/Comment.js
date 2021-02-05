@@ -94,7 +94,8 @@ export default function Comment({
           type="comment"
         />
         {/* this votes.length needs to be something else */}
-        {votes.length}
+        {votes.filter((x) => x.direction === 'up').length -
+          votes.filter((x) => x.direction === 'down').length}
         <VoteArrow
           direction="down"
           userVote={userVote}
