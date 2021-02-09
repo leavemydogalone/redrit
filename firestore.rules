@@ -24,7 +24,8 @@ service cloud.firestore {
         isSignedIn() &&
         checkKeys();
 
-      allow update: if isValidUser(request.resource.data) &&
+      allow update: if 
+      isValidUser(request.resource.data) &&
         isOwner(request.resource.data) &&
         isOwner(resource.data) &&
         isSignedIn() &&
@@ -61,12 +62,12 @@ service cloud.firestore {
         );
       }
 
-      // function isCalm() {
-      //   return ( 
-      //     request.time > resource.data.lastUpdate +
-      //     duration.value(5, 's')
-      //   ); 
-      // }
+      function isCalm() {
+        return ( 
+          request.time > resource.data.lastUpdate +
+          duration.value(5, 's')
+        ); 
+      }
 
       function checkKeys() {
         let requiredFields = ['uid','subscribedFeeds','displayName', 'lastUpdate', 'createdAt'];

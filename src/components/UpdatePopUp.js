@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import firebase from '../firebase';
+import { useHistory } from 'react-router-dom';
 import { getAllUsersData } from '../methods/firebaseMethods';
-
+import firebase from '../firebase';
 import { AuthContext } from '../auth/Auth';
 import checkItemValidity from '../methods/validationMethods';
 
@@ -36,33 +36,40 @@ export default function updatePopUp({ setPopUp, type }) {
       );
   }, [itemToBeUpdated]);
 
-  // it dont work
   const updateItem = async (e) => {
-    // if (e.target.value.length === 0) return;
+    if (itemToBeUpdated === '') {
+      return;
+    }
 
-    console.log(itemValidity);
-    console.log(currentUser.uid);
-    console.log(usersRef.doc(currentUser.uid));
-    console.log(itemToBeUpdated);
+    function setUserDisplayName() {
+      if (type === 'displayName') {
+        return {
+          displayName: itemToBeUpdated,
+          lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+        };
+      }
+      return {
+        lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
+      };
+    }
+
     if (itemValidity) {
       try {
-        await usersRef.doc(currentUser.uid).update({
-          displayName: itemToBeUpdated,
+        await usersRef.doc(currentUser.uid).update(setUserDisplayName());
+        await firebase.auth().currentUser.updateProfile({
+          type: itemToBeUpdated,
         });
 
-        // await firebase.auth().currentUser.updateProfile({
-        //   type: itemToBeUpdated,
-        // });
-
         setErrorMessage('Updated Successfully');
+        const closePopUp = setTimeout(() => {
+          setPopUp([]);
+        }, 2000);
       } catch (err) {
         setErrorMessage(err.message);
       }
     }
-    // resetInput();
   };
 
-  console.log(type);
   return (
     <div className="popUp">
       <button type="button" className="xButton" onClick={() => setPopUp([])}>
@@ -78,7 +85,7 @@ export default function updatePopUp({ setPopUp, type }) {
         minLength="3"
       />
       <div>
-        <button type="button" onClick={(e) => updateItem(e)}>
+        <button type="button" onClick={() => updateItem()}>
           Submit
         </button>
       </div>

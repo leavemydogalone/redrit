@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import { AuthContext } from '../auth/Auth';
 import firebase from '../firebase';
 import Spinner from '../components/Spinner';
@@ -21,11 +21,9 @@ function Profile({ setPopUp }) {
     userRef.get().then((doc) => {
       setUserData(doc.data());
       setLoading(false);
-      // console.log(doc.data());1
     });
   }
 
-  // console.log(currentUser);
   useEffect(() => {
     if (currentUser) getUserData();
   }, []);
@@ -81,6 +79,7 @@ function Profile({ setPopUp }) {
         <div className="profileBar" id="profilePostsAndComments">
           <div>
             Posts ({userData.posts}) : Comments ({userData.comments})
+            {/* <Link exa>Posts</Link> */}
           </div>
         </div>
       </div>
