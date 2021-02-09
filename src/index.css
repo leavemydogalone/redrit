@@ -49,7 +49,8 @@ input {
   padding: 1vh;
 }
 
-.topBar li button {
+.topBar li button,
+.bottomBanner button {
   background: none;
   color: white;
   border: none;
@@ -128,6 +129,17 @@ input {
   font-size: smaller;
 }
 
+.bottomBanner button {
+  margin-left: 5px;
+}
+
+.bottomBanner a,
+.bottomBanner button {
+  border: solid 1px #2d31287d;
+  background-color: #229326;
+  border-radius: 5px;
+  padding: 2px;
+}
 .topBanner b,
 .username,
 .postComments,
@@ -273,6 +285,8 @@ img {
 
 .profileBar {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
 }
 
 #profilePostsAndComments {

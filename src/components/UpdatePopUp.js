@@ -40,7 +40,8 @@ export default function updatePopUp({ setPopUp, type }) {
     if (itemToBeUpdated === '') {
       return;
     }
-
+    // maybe just get rid of updating username because then will need to change
+    // all votes and posts and comments they have done. Atleast for displayName prop
     function setUserDisplayName() {
       if (type === 'displayName') {
         return {

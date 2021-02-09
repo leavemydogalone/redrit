@@ -148,3 +148,12 @@ export function deleteVote(voteId) {
     .catch((err) => console.log(err));
   // might want to add a new key user with lastUpvote, downvote to slow it down
 }
+
+export function deletePost(postId, handleError) {
+  postsRef
+    .doc(postId)
+    .delete()
+    .catch((err) => {
+      handleError(err);
+    });
+}

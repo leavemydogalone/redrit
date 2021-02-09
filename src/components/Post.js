@@ -1,11 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import VoteArrow from './VoteArrow';
 import { AuthContext } from '../auth/Auth';
+import { deletePost } from '../methods/firebaseMethods';
+import SuccessPopUp from './SuccessPopUp';
 
 // import TopBanner from './TopBanner';
 
-export default function Post({ post, postVotes, setFeed }) {
+export default function Post({
+  post,
+  postVotes,
+  setFeed,
+  handleSuccessPopUp,
+  setReload,
+  reload,
+}) {
   const [votes, setVotes] = useState([]);
   const [userVote, setUserVote] = useState();
   const { currentUser } = useContext(AuthContext);
@@ -37,6 +46,20 @@ export default function Post({ post, postVotes, setFeed }) {
   useEffect(() => {
     determineUserVote();
   }, [votes]);
+
+  const history = useHistory();
+  const deleteButton = (
+    <button
+      type="button"
+      onClick={() => {
+        deletePost(post.id, handleSuccessPopUp('Post deleted successfully!'));
+        setReload(!reload);
+        // setReload(false);
+      }}
+    >
+      Delete Post
+    </button>
+  );
 
   const postBody =
     post.contentType === 'text' ? (
@@ -76,6 +99,7 @@ export default function Post({ post, postVotes, setFeed }) {
           type="post"
         />
         <Link to={`/comments/${post.id}`}>Comments</Link>
+        {post.uid === currentUser.uid ? deleteButton : ''}
       </div>
     </div>
   );

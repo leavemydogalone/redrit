@@ -34,7 +34,7 @@ export default function Routes() {
 
   const handleSuccessPopUp = (text) => {
     setPopUp([<SuccessPopUp text={text} />]);
-    console.log(text);
+
     const popUpTimeOut = setTimeout(() => setPopUp([]), 2000);
   };
 
@@ -67,7 +67,9 @@ export default function Routes() {
           <Route exact path="/postform">
             <PostForm handleSuccessPopUp={handleSuccessPopUp} />
           </Route>
-          <Route exact path="/" component={App} />
+          <Route exact path="/">
+            <App handleSuccessPopUp={handleSuccessPopUp} />
+          </Route>
           <Route exact path="/profile">
             <Profile setPopUp={setPopUp} />
           </Route>

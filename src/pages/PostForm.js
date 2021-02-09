@@ -69,7 +69,7 @@ function PostForm({ handleSuccessPopUp }) {
     setContentType('');
 
     await handleSuccessPopUp('Post added successfully!');
-    returnToFeeds();
+    // returnToFeeds();
   }
 
   // console.log(feedsListData, group, title, content, contentType);

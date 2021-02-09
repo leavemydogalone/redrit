@@ -1,17 +1,20 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { withRouter } from 'react-router-dom';
 import Post from '../components/Post';
 import { AuthContext } from '../auth/Auth';
 
 import Spinner from '../components/Spinner';
 import { getVotes, getPosts, getFeeds } from '../methods/firebaseMethods';
 
-function App() {
+function App({ handleSuccessPopUp }) {
   const { currentUser } = useContext(AuthContext);
   const [feed, setFeed] = useState('all');
   const [feedsData, setFeedsData] = useState([]);
   const [posts, setPosts] = useState([]);
   const [postVotes, setPostVotes] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [reload, setReload] = useState(false);
+
   // const [page, setPage] = useState(0);
 
   // one time get of a list of different groups/feeds
@@ -21,7 +24,7 @@ function App() {
 
   useEffect(() => {
     getPosts(setLoading, setPosts, feed);
-  }, [feed, currentUser]);
+  }, [feed, currentUser, reload]);
 
   // subscription to all post votes. Would probably be better as a one time
   // get so that they dont need to subscribe to all vote updates
@@ -63,10 +66,13 @@ function App() {
       <div className="feed">
         {posts.map((post) => (
           <Post
+            handleSuccessPopUp={handleSuccessPopUp}
             postVotes={postVotes}
             post={post}
             key={post.id}
             setFeed={setFeed}
+            setReload={setReload}
+            reload={reload}
           />
         ))}
       </div>
@@ -74,4 +80,4 @@ function App() {
   );
 }
 
-export default App;
+export default withRouter(App);
