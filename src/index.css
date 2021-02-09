@@ -70,7 +70,7 @@ input {
 }
 
 .popUp {
-  background-color: #dceabd;
+  background-color: #ffffff;
   border-radius: 5px;
   border: ridge blue 1px;
   box-shadow: 6px 6px 0px 4px rgba(0, 0, 255, 0.2);
@@ -87,9 +87,14 @@ input {
   margin-top: -15vh;
 }
 
+.popUp .inValid {
+  background-color: #dd585854;
+}
+
 .xButton {
-  display: flex;
-  flex-direction: row-reverse;
+  position: absolute;
+  right: 5%;
+  width: fit-content;
 }
 
 .loginPopUp input {

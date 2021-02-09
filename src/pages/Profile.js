@@ -25,7 +25,7 @@ function Profile({ setPopUp }) {
     });
   }
 
-  console.log(currentUser);
+  // console.log(currentUser);
   useEffect(() => {
     if (currentUser) getUserData();
   }, []);
@@ -43,7 +43,7 @@ function Profile({ setPopUp }) {
 
   if (loading) return <Spinner />;
 
-  const updateWordArray = ['displayName', 'password', 'email', 'avatar'];
+  const updateWordArray = ['displayName', 'password', 'email', 'photoURL'];
   const updateButtons = updateWordArray.map((thing) => (
     <button
       type="button"

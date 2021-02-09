@@ -45,40 +45,31 @@ service cloud.firestore {
           // user.uid
           user.uid is string &&
           user.uid != '' &&
-          // user.commentPoints
-          user.commentPoints is number &&
-          user.commentPoints == 0 &&
-          user.commentPoints != '' &&
-          // user.postPoints
-          user.postPoints is number &&
-          user.postPoints == 0 &&
-          user.postPoints != '' &&
           // user.subscribedFeeds
           user.subscribedFeeds is list &&
           user.subscribedFeeds != '' &&
           // user.displayName
           user.displayName is string &&
           user.displayName != '' &&
-          // user.posts
-          user.posts is number &&
-          user.posts == 0 &&
-          user.posts != '' &&
-          // user.comments
-          user.comments is number &&
-          user.comments == 0 &&
-          user.comments != '' 
+          // user.createdAt
+          user.createdAt is timestamp &&
+          user.createdAt != '' &&
+          // user.lastUpdate
+          user.lastUpdate is timestamp &&
+          user.lastUpdate != '' 
+          
         );
       }
 
-      function isCalm() {
-        return ( 
-          request.time > resource.data.lastUpdate +
-          duration.value(5, 's')
-        ); 
-      }
+      // function isCalm() {
+      //   return ( 
+      //     request.time > resource.data.lastUpdate +
+      //     duration.value(5, 's')
+      //   ); 
+      // }
 
       function checkKeys() {
-        let requiredFields = ['uid','commentPoints','postPoints','subscribedFeeds','displayName','posts','comments'];
+        let requiredFields = ['uid','subscribedFeeds','displayName', 'lastUpdate', 'createdAt'];
         let optionalFields = [];
         let allFields = requiredFields.concat(optionalFields);
         return request.resource.data.keys().hasAll(requiredFields) &&

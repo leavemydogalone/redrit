@@ -19,10 +19,8 @@ export default function Login({ setPopUp }) {
   const newUser = (uid) => ({
     displayName,
     uid,
-    commentPoints: 0,
-    postPoints: 0,
-    comments: 0,
-    posts: 0,
+    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    lastUpdate: firebase.firestore.FieldValue.serverTimestamp(),
     subscribedFeeds: [],
   });
 
