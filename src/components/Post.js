@@ -98,7 +98,7 @@ export default function Post({
           type="post"
         />
         <Link to={`/comments/${post.id}`}>Comments</Link>
-        {post.uid === currentUser.uid ? deleteButton : ''}
+        {currentUser && currentUser.uid === post.uid ? deleteButton : ''}
       </div>
     </div>
   );

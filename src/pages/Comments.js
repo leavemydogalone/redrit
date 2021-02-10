@@ -53,25 +53,34 @@ function Comments({ match, handleSuccessPopUp }) {
     }
   }, [commentsData]);
 
+  function returnFromSubmit(text) {
+    handleSuccessPopUp(text);
+    // eslint-disable-next-line no-useless-return
+    return;
+  }
   // adds the comment to firestore and resets the placeHolder text
-  function handleSubmit() {
-    if (newCommentText === '' || !currentUser) return;
+  async function handleSubmit() {
+    const checkForUser = !currentUser && returnFromSubmit('Please sign in!');
+    const checkForText =
+      newCommentText === '' && handleSuccessPopUp('No empty comments allowed!');
+    if ((await checkForUser) || (await checkForText)) return;
 
-    const newComment = {
+    const newComment = currentUser && {
       content: newCommentText,
       parentId: null,
       id: uuidv4(),
       user: currentUser.displayName,
       uid: currentUser.uid,
-      votes: 1,
+      votes: 0,
       createdAt: firebase.firestore.Timestamp.now(),
       lastUpdate: firebase.firestore.Timestamp.now(),
       post: postData.id,
     };
+
     const commentClone = { ...newComment };
     setNewCommentText('');
 
-    addComment(postCommentsRef, commentClone);
+    addComment(postCommentsRef, commentClone, handleSuccessPopUp);
     handleSuccessPopUp('Comment added successfully!');
   }
 

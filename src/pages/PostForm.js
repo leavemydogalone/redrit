@@ -48,20 +48,21 @@ function PostForm({ handleSuccessPopUp }) {
   }
 
   // function to return user to feeds
-  const history = useHistory();
-  const returnToFeeds = () => {
-    const path = `/`;
-    history.push(path);
-  };
+  // was getting error because it returned to feed before the post was fully created in firebase
+  // const history = useHistory();
+  // const returnToFeeds = () => {
+  //   const path = `/`;
+  //   history.push(path);
+  // };
 
   // if the new group does not exist in the database, it will add the group to the groupsref
   // then adds the post to the post collection and resets states
   // then it will make the successful post popup and return user to feeds
   async function handleSubmit(newPost) {
     const checkNewGroupName = feedsListData.includes(group);
-    if (!checkNewGroupName) addGroup({ title: group });
+    if (!checkNewGroupName) addGroup({ title: group }, handleSuccessPopUp);
 
-    await addPost(newPost);
+    await addPost(newPost, handleSuccessPopUp);
 
     setTitle('');
     setGroup('');

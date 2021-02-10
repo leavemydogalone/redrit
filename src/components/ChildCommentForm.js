@@ -19,19 +19,25 @@ export default function ChildCommentForm({
   const postCommentsRef = postRef.collection('comments');
   const commentsRef = firebase.firestore().collection('comments');
 
-  async function handleSubmit(childComment) {
-    if (childCommentText === '') return;
-    const childCommentClone = { ...childComment };
+  async function handleSubmit() {
+    if (childCommentText === '' || !currentUser) return;
+
+    const newComment = {
+      content: childCommentText,
+      id: uuidv4(),
+      user: currentUser.displayName,
+      uid: currentUser.uid,
+      votes: 1,
+      parentId: thisComment.id,
+      post: postData.id,
+      createdAt: firebase.firestore.Timestamp.now(),
+      lastUpdate: firebase.firestore.Timestamp.now(),
+    };
+
     setChildCommentText('');
 
-    await addComment(postCommentsRef, childComment);
+    await addComment(postCommentsRef, newComment);
 
-    await commentsRef
-      .doc(childCommentClone.id)
-      .set(childCommentClone)
-      .catch((err) => {
-        console.log(err);
-      });
     setSelected(false);
   }
 
@@ -46,19 +52,7 @@ export default function ChildCommentForm({
         <button
           type="button"
           id="childCommentSubmitButton"
-          onClick={() =>
-            handleSubmit({
-              content: childCommentText,
-              id: uuidv4(),
-              user: currentUser.displayName,
-              uid: currentUser.uid,
-              votes: 1,
-              parentId: thisComment.id,
-              post: postData.id,
-              createdAt: firebase.firestore.Timestamp.now(),
-              lastUpdate: firebase.firestore.Timestamp.now(),
-            })
-          }
+          onClick={() => handleSubmit()}
         >
           Submit response!
         </button>

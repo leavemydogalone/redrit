@@ -128,7 +128,7 @@ export default function Comment({
         >
           reply
         </div>
-        {thisComment.uid === currentUser.uid ? deleteButton : ''}
+        {currentUser && currentUser.uid === thisComment.uid ? deleteButton : ''}
       </div>
       {formPopUp.map((child) => child)}
       {nestedComments}

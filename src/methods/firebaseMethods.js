@@ -2,7 +2,6 @@ import firebase from '../firebase';
 
 const backgroundRef = firebase.storage().ref('prism.png');
 const postsRef = firebase.firestore().collection('posts');
-const commentsRef = firebase.firestore().collection('comments');
 const usersRef = firebase.firestore().collection('users');
 const groupsRef = firebase.firestore().collection('groups');
 const votesRef = firebase.firestore().collection('votes');
@@ -19,13 +18,13 @@ export function getBackground(setBackgroundUrl) {
     });
 }
 
-export function addPost(newPost) {
+export function addPost(newPost, handleError) {
   postsRef
     .doc(newPost.id)
     .set(newPost)
     .catch((err) => {
       console.log(err);
-      alert('Please make sure all fields are filled out!');
+      handleError('Please make sure all fields are filled out!');
     });
 }
 
@@ -46,13 +45,13 @@ export function getCommentsData(postCommentsRef, setCommentsData) {
   });
 }
 
-export function addComment(postCommentsRef, newComment) {
+export function addComment(postCommentsRef, newComment, handleError) {
   postCommentsRef
     .doc(newComment.id)
     .set(newComment)
     .catch((err) => {
       console.log(err);
-      alert('Please make sure all fields are filled out!');
+      handleError('Please make sure all fields are filled out!');
     });
 }
 
@@ -80,13 +79,13 @@ export function getAllUsersData(setAllUsersData) {
     });
 }
 
-export function addGroup(newGroup) {
+export function addGroup(newGroup, handleError) {
   groupsRef
     .doc(newGroup.title)
     .set(newGroup)
     .catch((err) => {
       console.log(err);
-      alert('Could not add new group');
+      handleError('Could not add new group');
     });
 }
 
