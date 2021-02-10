@@ -21,7 +21,6 @@ export default function ChildCommentForm({
 
   async function handleSubmit() {
     if (childCommentText === '' || !currentUser) return;
-
     const newComment = {
       content: childCommentText,
       id: uuidv4(),
@@ -34,9 +33,10 @@ export default function ChildCommentForm({
       lastUpdate: firebase.firestore.Timestamp.now(),
     };
 
+    const newCommentClone = { ...newComment };
     setChildCommentText('');
 
-    await addComment(postCommentsRef, newComment);
+    await addComment(postCommentsRef, newCommentClone);
 
     setSelected(false);
   }

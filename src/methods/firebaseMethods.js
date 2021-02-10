@@ -7,15 +7,13 @@ const groupsRef = firebase.firestore().collection('groups');
 const votesRef = firebase.firestore().collection('votes');
 
 // must add the doc to the person's profile as well for posts and comments
-export function getBackground(setBackgroundUrl) {
+export function getBackground(setBackgroundUrl, handleError) {
   backgroundRef
     .getDownloadURL()
     .then((url) => {
       setBackgroundUrl(url);
     })
-    .catch((error) => {
-      console.log(error);
-    });
+    .catch((err) => {});
 }
 
 export function addPost(newPost, handleError) {
@@ -23,7 +21,6 @@ export function addPost(newPost, handleError) {
     .doc(newPost.id)
     .set(newPost)
     .catch((err) => {
-      console.log(err);
       handleError('Please make sure all fields are filled out!');
     });
 }
@@ -50,7 +47,7 @@ export function addComment(postCommentsRef, newComment, handleError) {
     .doc(newComment.id)
     .set(newComment)
     .catch((err) => {
-      console.log(err);
+      // console.log(err);
       handleError('Please make sure all fields are filled out!');
     });
 }
@@ -64,7 +61,7 @@ export function deleteComment(postCommentsRef, commentId, handleError) {
     });
 }
 
-export function getAllUsersData(setAllUsersData) {
+export function getAllUsersData(setAllUsersData, handleError) {
   usersRef
     .get()
     .then((querySnapshot) => {
@@ -75,7 +72,7 @@ export function getAllUsersData(setAllUsersData) {
       setAllUsersData(items);
     })
     .catch((error) => {
-      console.log('Error getting documents: ', error);
+      handleError('Error getting user details');
     });
 }
 
@@ -84,13 +81,12 @@ export function addGroup(newGroup, handleError) {
     .doc(newGroup.title)
     .set(newGroup)
     .catch((err) => {
-      console.log(err);
       handleError('Could not add new group');
     });
 }
 
 // single get of either all posts or for a specific feed and orders them by recency
-export function getPosts(setLoading, setPosts, feed) {
+export function getPosts(setLoading, setPosts, feed, handleError) {
   // determines if it needs to pull all posts or just for a specific group
   function allOrOneFeed() {
     if (feed === 'all') return postsRef;
@@ -109,7 +105,7 @@ export function getPosts(setLoading, setPosts, feed) {
       setPosts(items);
       setLoading(false);
     })
-    .catch((err) => console.log(err));
+    .catch((err) => handleError(err));
 }
 
 export function getFeeds(setFeedsData) {
@@ -141,19 +137,19 @@ export function getVotes(setVotes, type) {
   });
 }
 
-export function addVote(uid, id, voteObj) {
+export function addVote(uid, id, voteObj, handleError) {
   votesRef
     .doc(voteObj.voteId)
     .set(voteObj)
-    .catch((err) => console.log(err));
+    .catch((err) => handleError(err));
   // need to update the post/comments votes as well
 }
 
-export function deleteVote(voteId) {
+export function deleteVote(voteId, handleError) {
   votesRef
     .doc(voteId)
     .delete()
-    .catch((err) => console.log(err));
+    .catch((err) => handleError(err));
   // might want to add a new key user with lastUpvote, downvote to slow it down
 }
 

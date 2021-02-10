@@ -60,10 +60,11 @@ function Comments({ match, handleSuccessPopUp }) {
   }
   // adds the comment to firestore and resets the placeHolder text
   async function handleSubmit() {
-    const checkForUser = !currentUser && returnFromSubmit('Please sign in!');
+    const checkForUser =
+      !currentUser && returnFromSubmit('Please sign in to leave a comment!');
     const checkForText =
       newCommentText === '' && handleSuccessPopUp('No empty comments allowed!');
-    if ((await checkForUser) || (await checkForText)) return;
+    if (!currentUser || newCommentText === '') return;
 
     const newComment = currentUser && {
       content: newCommentText,
@@ -97,7 +98,6 @@ function Comments({ match, handleSuccessPopUp }) {
           <br />
           <div>{postData.content}</div>
           <br />
-          <div>votes {postData.votes}</div>
         </div>
 
         <div className="commentForm">
