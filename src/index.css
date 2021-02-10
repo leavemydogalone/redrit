@@ -30,6 +30,8 @@ body {
 
 .topBar ul {
   display: flex;
+  margin: auto;
+  padding: 0;
 }
 
 input {
