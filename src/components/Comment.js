@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { AuthContext } from '../auth/Auth';
-import firebase from '../firebase';
+import { deleteComment } from '../methods/firebaseMethods';
 import ChildCommentForm from './ChildCommentForm';
 import VoteArrow from './VoteArrow';
 
@@ -10,11 +10,12 @@ export default function Comment({
   selected,
   postData,
   votesData,
+  postCommentsRef,
+  handleSuccessPopUp,
 }) {
   const { currentUser } = useContext(AuthContext);
   const [votes, setVotes] = useState([]);
   const [userVote, setUserVote] = useState();
-
   const [formPopUp, setFormPopUp] = useState([]);
 
   // logic to maintain only one child comment form at a time on page
@@ -76,8 +77,25 @@ export default function Comment({
       selected={selected}
       setSelected={setSelected}
       postData={postData}
+      postCommentsRef={postCommentsRef}
+      handleSuccessPopUp={handleSuccessPopUp}
     />
   ));
+
+  const deleteButton = (
+    <button
+      type="button"
+      onClick={() => {
+        deleteComment(
+          postCommentsRef,
+          thisComment.id,
+          handleSuccessPopUp('Comment deleted successfully!')
+        );
+      }}
+    >
+      delete
+    </button>
+  );
 
   return (
     <div className="comment" data-testid="Comment">
@@ -110,6 +128,7 @@ export default function Comment({
         >
           reply
         </div>
+        {thisComment.uid === currentUser.uid ? deleteButton : ''}
       </div>
       {formPopUp.map((child) => child)}
       {nestedComments}

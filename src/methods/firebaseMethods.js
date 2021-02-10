@@ -56,6 +56,15 @@ export function addComment(postCommentsRef, newComment) {
     });
 }
 
+export function deleteComment(postCommentsRef, commentId, handleError) {
+  postCommentsRef
+    .doc(commentId)
+    .delete()
+    .catch((err) => {
+      handleError(err);
+    });
+}
+
 export function getAllUsersData(setAllUsersData) {
   usersRef
     .get()

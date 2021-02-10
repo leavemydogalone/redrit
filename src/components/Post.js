@@ -54,7 +54,6 @@ export default function Post({
       onClick={() => {
         deletePost(post.id, handleSuccessPopUp('Post deleted successfully!'));
         setReload(!reload);
-        // setReload(false);
       }}
     >
       Delete Post
@@ -89,7 +88,7 @@ export default function Post({
           parentId={post.id}
           type="post"
         />
-        {/* this votes.length needs to be something else */}
+
         {votes.filter((x) => x.direction === 'up').length -
           votes.filter((x) => x.direction === 'down').length}
         <VoteArrow

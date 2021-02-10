@@ -113,6 +113,8 @@ function Comments({ match, handleSuccessPopUp }) {
               key={comment.id}
               selected={selected}
               setSelected={setSelected}
+              postCommentsRef={postCommentsRef}
+              handleSuccessPopUp={handleSuccessPopUp}
             />
           ))}
         </div>
