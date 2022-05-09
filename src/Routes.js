@@ -20,10 +20,6 @@ export default function Routes() {
     getBackground(setBackgroundUrl);
   }, []);
 
-  useEffect(() => {
-    document.querySelector('#root').style.background = `url(${backgroundUrl})`;
-  }, [backgroundUrl]);
-
   const handleLoginPopUp = () => {
     if (!popUp[0]) {
       setPopUp([<Login setPopUp={setPopUp} />]);

@@ -75,8 +75,8 @@ export default function Post({
           posted by u/{post.user} {post.createdAt.toDate().toDateString()}
         </div>
       </div>
-      <b>{post.title}</b>
-      <br />
+      <div className="postTitle">{post.title}</div>
+
       <div className="postBody" data-testid="PostBody">
         {postBody}
       </div>

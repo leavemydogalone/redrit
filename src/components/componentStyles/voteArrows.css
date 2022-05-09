@@ -49,7 +49,7 @@
 }
 
 #voted {
-  color: yellow;
+  color: rgb(89, 155, 52);
 }
 
 #voted:hover {

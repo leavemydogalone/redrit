@@ -17,14 +17,14 @@ body {
   /* background-color: rgba(0, 0, 0, 0.69); */
   min-height: 100%;
   padding-top: 5px;
-  color: rgb(235, 235, 235);
+  color: rgb(19, 19, 19);
 }
 
 .topBar {
   height: 10vh;
   display: flex;
-  background-color: #2fa42f;
-  border-bottom: ridge 2px;
+  background-color: #edf4ff;
+  box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.3);
   top: 0px;
 }
 
@@ -47,7 +47,7 @@ input {
   border-radius: 5px;
   border: solid 1px #2d31287d;
   height: fit-content;
-  background-color: rgba(0, 100, 16, 0.27);
+  background-color: rgb(52, 92, 155);
   padding: 1vh;
 }
 
@@ -68,8 +68,8 @@ input {
   color: white;
 }
 
-.feedSelectorBar {
-  margin-left: 3%;
+.App .feedSelectorBar {
+  margin-bottom: 4px;
 }
 
 .popUp {
@@ -117,8 +117,8 @@ input {
   padding: auto;
 }
 .postBody {
-  background-color: #08510882;
-  padding: 4px;
+  background-color: #edf4ff;
+  padding: 6px 4px;
   border-radius: 2px;
 }
 .topBanner {
@@ -138,7 +138,7 @@ input {
 .bottomBanner a,
 .bottomBanner button {
   border: solid 1px #2d31287d;
-  background-color: #229326;
+  background-color: rgb(52, 92, 155);
   border-radius: 5px;
   padding: 2px;
 }
@@ -158,7 +158,12 @@ input {
 .postComments {
   width: fit-content;
 }
-
+.username {
+  padding: 3px 0 6px;
+}
+.postTitle {
+  padding-bottom: 3px;
+}
 img {
   max-height: 30%;
   max-width: 30%;
@@ -228,7 +233,7 @@ img {
 .feed,
 .feedSelectorBar,
 .postForm {
-  background-color: #2fa42f;
+  background-color: #edf4ff;
   border-radius: 5px;
   /* box-shadow: 6px 6px 0px 4px rgba(0, 0, 255, 0.2); */
   max-width: 50vw;
@@ -246,9 +251,9 @@ img {
 .profileMain,
 .profileBar,
 .post {
-  background-color: rgba(0, 100, 16, 0.27);
+  background-color: rgb(214, 230, 255);
   border-radius: 5px;
-  border: solid 1px #2d31287d;
+  box-shadow: 0 0 2px grey;
   margin: 2px;
   padding: 15px;
 }
