@@ -1,6 +1,10 @@
 My version of the reddit website, created as part of the curriculum of The Odin Project using React and Firebase Firestore.
 
-WIP
+After a year, still a WIP
+
+I really just wanted to burn through this project to continue on my studies which is why the styling is pretty lacking.
+
+Part of my portfolio to show my ability to work with APIs, handle page navigation and users, and interacting with a basic NoSQL database a form security.
 
 [Redrit](https://redrit-75871.web.app/)
 
