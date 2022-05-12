@@ -72,7 +72,7 @@ function Comments({ match, handleSuccessPopUp }) {
       id: uuidv4(),
       user: currentUser.displayName,
       uid: currentUser.uid,
-      votes: 0,
+      votes: 1,
       createdAt: firebase.firestore.Timestamp.now(),
       lastUpdate: firebase.firestore.Timestamp.now(),
       post: postData.id,

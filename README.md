@@ -1,14 +1,21 @@
-My version of the reddit website, created as part of the curriculum of The Odin Project using React and Firebase Firestore.
-
-After a year, still a WIP
-
-I really just wanted to burn through this project to continue on my studies which is why the styling is pretty lacking.
-
-Part of my portfolio to show my ability to work with APIs, handle page navigation and users, and interacting with a basic NoSQL database a form security.
-
 [Redrit](https://redrit-75871.web.app/)
 
-View posts created by yourself and other users, saved to Firebase.
+My version of the reddit website, created as part of the curriculum of The Odin Project using React and Firebase Firestore.
+
+React, Firebase
+
+React was used to create a fast, single-page application and used React Router to handle the routing between the different tabs/pages and different routes based on user login status.
+
+Firebase was used as my BaaS because it offers everything I needed for this project all in one package. User authentication, easy to read and write validation, and a NoSQL database.
+
+View posts on the main page, and you can sort based on the sub-group you would like to view posts from. If you would like to create a post or comment on a post you will need to first create an account by clicking the appropriate button in the top bar.
+
+Create an account and you will automatically be logged in and your login info will be saved for use on later visits. Once you have created your account you are free to create a post or leave a comment which will be cleaned and validated before it is accepted by the backend.
+
+Challenges:
+-My limited CSS skills at the time of creation which I am slowly working on correcting
+
+-User authentication was a big pain to impliment as it was something I needed to tackle before I could do much else in the project and figuring out what to load/allow based on user login status
 
 updates to add:
 

@@ -15,22 +15,20 @@ function App({ handleSuccessPopUp }) {
   const [loading, setLoading] = useState(false);
   const [reload, setReload] = useState(false);
 
-  // const [page, setPage] = useState(0);
-
   // one time get of a list of different groups/feeds
   useEffect(() => {
     getFeeds(setFeedsData);
   }, []);
 
-  useEffect(() => {
-    getPosts(setLoading, setPosts, feed);
-  }, [feed, currentUser, reload]);
-
   // subscription to all post votes. Would probably be better as a one time
   // get so that they dont need to subscribe to all vote updates
   // but since the app will likely not recieve much traffic, having a user
   // be subscribed to all votes won't affect their performance too negatively
+  useEffect(() => {
+    getPosts(setLoading, setPosts, feed);
+  }, [feed, currentUser, reload]);
 
+  // subscription to post votes, see above for why its a subscription
   useEffect(() => {
     getVotes(setPostVotes, 'post');
     return () => {
@@ -38,6 +36,7 @@ function App({ handleSuccessPopUp }) {
     };
   }, []);
 
+  // will create a drop down of the different feeds you can view
   const feedOptions = feedsData.map((group) => (
     <option value={group} key={group}>
       {group}

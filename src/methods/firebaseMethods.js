@@ -47,7 +47,7 @@ export function addComment(postCommentsRef, newComment, handleError) {
     .doc(newComment.id)
     .set(newComment)
     .catch((err) => {
-      // console.log(err);
+      console.log(err);
       handleError('Please make sure all fields are filled out!');
     });
 }
@@ -90,11 +90,13 @@ export function getPosts(setLoading, setPosts, feed, handleError) {
   // determines if it needs to pull all posts or just for a specific group
   function allOrOneFeed() {
     if (feed === 'all') return postsRef;
+    // if it is not all then look for the posts in the specific group
     return postsRef.where('group', '==', feed);
   }
 
   setLoading(true);
   allOrOneFeed()
+    // sort by why the posts were created, with the newer ones in front
     .orderBy('createdAt', 'desc')
     .get()
     .then((querySnapshot) => {
