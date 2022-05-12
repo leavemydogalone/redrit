@@ -204,15 +204,14 @@ img {
 }
 
 .commentForm {
-  margin: 5px auto 5px auto;
+  margin: 10px auto 12px auto;
   padding: 5px;
   height: 15vh;
-  max-width: 40vw;
+  max-width: 48vw;
   display: flex;
   flex-direction: column;
-  border-top: solid 3px black;
-  border-bottom: solid 3px black;
-  background-color: rgba(37, 189, 61, 0.45);
+
+  background-color: rgb(214, 230, 255);
 }
 
 .commentForm textarea,
